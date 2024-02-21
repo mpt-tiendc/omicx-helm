@@ -1,0 +1,97 @@
+{{- $fullname := include "omicx.name" . }}
+{{- range $deployment := .Values.deployments }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ $fullname }}-{{ $deployment.name }}-deployment"
+spec:
+  replicas: {{ $deployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ $fullname }}-{{ $deployment.name }}-deployment"
+  template:
+    metadata:
+      labels:
+        app: "{{ $fullname }}-{{ $deployment.name }}-deployment"
+    spec:
+      containers:
+        - name: {{ $deployment.name }}
+          image: "{{ $deployment.image }}:{{ $deployment.tag }}"
+          imagePullPolicy: {{ $deployment.pullPolicy }}
+          env:
+            {{- with $deployment.env }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if $deployment.configmap }}
+            - configMapRef:
+                name: {{ $deployment.configmap }}
+            {{- end }}
+            {{- if $deployment.envs.config }}
+            - configMapRef:
+                name: "{{ $fullname }}-{{ $deployment.name }}-configmap"
+            {{- end }}
+            {{- if $deployment.envs.secret}}
+            - secretRef:
+                name: "{{ $fullname }}-{{ $deployment.name }}-secret"
+            {{- end}}    
+          ports:
+            - name: http
+              containerPort: {{ $deployment.service.port }}
+              protocol: TCP
+            {{- if $deployment.service.grpcPort}}
+            - name: grpc
+              containerPort: {{  $deployment.service.grpcPort }}
+              protocol: TCP
+            {{- end}}
+          # livenessProbe:
+          #   initialDelaySeconds: {{ $deployment.initialDelaySeconds }}
+          #   httpGet:
+          #     path: {{ $deployment.routePath }}
+          #     port: http
+          # readinessProbe:
+          #   initialDelaySeconds: {{ $deployment.initialDelaySeconds }}
+          #   httpGet:
+          #     path: {{ $deployment.routePath }}
+          #     port: http
+          resources:
+            {{- toYaml $deployment.resources | nindent 12 }}
+          {{- if or $deployment.volumeMounts $deployment.configmapFromFile }}
+          volumeMounts:
+            {{- with $deployment.volumeMounts }} 
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- range $config := $deployment.configmapFromFile }}
+            - mountPath: {{ $config.mountPath }}
+              name: {{ $config.name }}
+              {{- if $config.subPath }}
+              subPath: {{ $config.subPath }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if $deployment.nodeAffinity }}
+      affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: {{ $deployment.nodeAffinity.key }}
+                operator: In
+                values:
+                {{- range $deployment.nodeAffinity.values }}
+                - {{ . | quote }}
+                {{- end }}
+      {{- end }}
+      {{- if or $deployment.volumes $deployment.configmapFromFile }}
+      volumes:
+        {{- with $deployment.volumes }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- range $config := $deployment.configmapFromFile }}
+        - name: {{ $config.name }}
+          configMap:
+            name: "{{ $fullname }}-{{ $deployment.name }}-{{ $config.name }}-configmap"
+        {{- end }}
+      {{- end }}
+---
+{{- end }}

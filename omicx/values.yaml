@@ -1,0 +1,1377 @@
+# Default values for omicx.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+volumeClaims:
+  - name: pvc-omicx-home-data
+    accessModes:
+      - ReadWriteOnce
+      - ReadWriteMany
+      - ReadOnlyMany
+    storage: 10Gi
+    volumeMode: Filesystem
+    storageClassName: nfs-client
+  - name: pvc-omicx-channelmanager-data
+    accessModes:
+      - ReadWriteOnce
+      - ReadWriteMany
+      - ReadOnlyMany
+    storage: 10Gi
+    volumeMode: Filesystem
+    storageClassName: nfs-client
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+deployments:
+  - name: nginx
+    image: docker-registry.metechvn.com/nginx-lua
+    pullPolicy: IfNotPresent
+    tag: "1.1-alpine"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/nginx/*"
+        mountPath: "/etc/nginx/conf.d" 
+        subPath: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        BACKEND_URL: http://omicx-authorization-service-21021-service.default.svc.cluster.local:21021/api/Authorization/CheckPermission
+    volumeMounts:
+      - mountPath: /home/data
+        name: homedata
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 80
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: product-catalog
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/product_catalog
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /api
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        DB_DATABASE: ProductCatalog
+        DB_HOST: 10.106.26.240
+        DB_PASSWORD: MPT@dmin@2023
+        DB_PORT: "1433"
+        DB_TYPE: mssql
+        DB_USERNAME: mptadmin
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        LOG_DIR: /app/logs/omicx-product-catalog
+        LOG_LEVEL: info
+        NODE_ENV: development
+        PORT: "3005"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3005
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 32Mi
+  - name: cci
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/pbx-integration
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        ADMIN_PASSWORD: F88@Admin#123
+        ADMIN_USERNAME: f88
+        DB_DATABASE: fusionpbx
+        DB_HOST: 10.106.26.193
+        DB_PASSWORD: Default#Postgres@6699
+        DB_PORT: "15432"
+        DB_TYPE: postgres
+        DB_USERNAME: postgres
+        JWT_EXPIRES_IN: 1d
+        JWT_SECRET: metech@123
+        KAFKA_AUTHENTICATION_TIMEOUT: "1000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CLIENT_ID: CCI
+        KAFKA_CONNECTION_TIMEOUT: "3000"
+        KAFKA_GROUP_ID: CCI
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        LOG_DIR: /app/logs/omicx-cci
+        LOG_LEVEL: info
+        NODE_ENV: production
+        PBX_HEARTBEAT_INTERVAL: "60000"
+        CPS: 20
+        SLEEP_MS: 1000
+        PBX_INSTANCES: 10.106.26.193,8021,ClueCon,103.172.236.143:5080|external&10.106.26.199,8021,ClueCon,103.172.236.27:5080|external
+        PORT: "5580"
+        RECORD_URL_PREFIX: https://ps1.omicx.vn/file
+        URL_CALL_CENTER: http://10.106.26.193:5590,http://10.106.26.199:5590
+        IP_GATEWAY: "8ab65d17-7d16-4971-91b5-60035cd13340"
+        ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
+        ASM_VOICE_GRPC_URL: omicx-asm-3003-service:3476
+    volumeMounts: 
+      - mountPath: /public
+        name: public
+    volumes: 
+      - name: public
+        persistentVolumeClaim:
+          claimName: pvc-omicx-cci-public
+    service:
+      type: ClusterIP
+      port: 5580
+      grpcPort: 3475
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 32Mi
+  - name: campaign-planning
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/campaign_planning
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        DB_DATABASE: OMICXAUTODIALER
+        DB_HOST: 10.106.26.240
+        DB_PASSWORD: MPT@dmin@2023
+        DB_PORT: "1433"
+        DB_TYPE: mssql
+        DB_USERNAME: mptadmin
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_GROUP_ID: PLANNING
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_RESPONSE_TIMEOUT: "30000"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        LOG_DIR: /app/logs/omicx-campaign-planning
+        LOG_LEVEL: info
+        NODE_ENV: production
+        PORT: "3000"
+        SCAN_HEARTBEAT_INTERVAL: "60000"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3000
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 1024Mi
+      requests:
+        cpu: 125m
+        memory: 32Mi
+  - name: campaign-execution
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/campaign_execution
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        DB_DATABASE: OMICXAUTODIALER
+        DB_HOST: 10.106.26.240
+        DB_PASSWORD: MPT@dmin@2023
+        DB_PORT: "1433"
+        DB_TYPE: mssql
+        DB_USERNAME: mptadmin
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        EXECUTION_REPEAT_INTERVAL: "15000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CONNECTION_TIMEOUT: "30000"
+        KAFKA_GROUP_ID: EXECUTION
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_RESPONSE_TIMEOUT: "30000"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        LOG_DIR: /app/logs/omicx-campaign-execution
+        LOG_LEVEL: info
+        NODE_ENV: production
+        PORT: "3001"
+        CCI_URL: "http://omicx-cci-5580-service:5580"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3001
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 32Mi
+  - name: asm
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/omicx_asm
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /api/v1
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        DB_DATABASE: OMICXASM
+        DB_HOST: 10.106.26.240
+        DB_PASSWORD: MPT@dmin@2023
+        DB_PORT: "1433"
+        DB_TYPE: mssql
+        DB_USERNAME: mptadmin
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CONNECTION_TIMEOUT: "30000"
+        KAFKA_GROUP_ID: ASM
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_RESPONSE_TIMEOUT: "30000"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        LOG_DIR: /app/logs/omicx-asm
+        LOG_LEVEL: info
+        NODE_ENV: production
+        TIMEOUT_AGENT_LOGOUT: "300000"
+        PORT: "3003"
+        CCI_GRPC_URL: omicx-cci-5580-service:3475
+        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_PASSWORD: Metech123
+        REDIS_PING_INTERVAL: 10000
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3003
+      grpcPort: 3476
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: campaign-audit
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/campaign_audit
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        DB_DATABASE: AutocallAudit
+        DB_HOST: 10.106.26.100
+        DB_PASSWORD: Metech123
+        DB_PORT: "27017"
+        DB_TYPE: mongodb
+        DB_USERNAME: root
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CONNECTION_TIMEOUT: "30000"
+        KAFKA_GROUP_ID: AUDIT
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_RESPONSE_TIMEOUT: "30000"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        NODE_ENV: production
+        PORT: "3002"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3002
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: channel-gateway
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/channel-gateway
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        AGENT_STATUS_TOPIC: agent_status
+        BOOTSTRAP_SERVERS: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        CALL_DTMF_TOPIC: call_dtmf
+        FACEBOOK_VERIFY_TOKEN: Metech#FB@123
+        INSTANCE_ID: CHANNELGW
+        JSON_CDR_TOPIC: json_cdr
+        KAFKA_SECURITY_LOGIN_MODULE: org.apache.kafka.common.security.plain.PlainLoginModule
+        KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
+        KAFKA_SECURITY_PASSWORD: Metech123
+        KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+        KAFKA_SECURITY_USERNAME: kafka-admin
+        LOG_DIR: /var/log/channelgw
+        SCHEMA_REGISTRY_URL: http://schema-headless:8081
+        SOCIAL_WEBHOOK_TOPIC: social_webhook
+    volumeMounts: 
+      - mountPath: /data/
+        name: omicx-channel-gateway
+    volumes: 
+      - name: omicx-channel-gateway
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 6969
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: domain-registry
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/domain_registry
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/domain-registry/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/wwwroot
+        name: data
+    volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 9722
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: job-common
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/job_common
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/job-common/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/log4net.config
+        name: config
+        subPath: log4net.config
+      - mountPath: /app/wwwroot
+        name: homedata
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 9703
+    resources: 
+      limits:
+        cpu: "2"
+        memory: 2Gi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: autocall-report
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/autocall-report
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/autocall-report/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/wwwroot
+        name: homedata
+    volumes: 
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 80
+    resources: 
+      limits:
+        cpu: "3"
+        memory: 6Gi
+      requests:
+        cpu: 256m
+        memory: 512Mi
+
+  - name: socket-server
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/socket_server
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        CS_CONSOLE_ENABLED: "true"
+        CS_CRM_ADMIN_BACKEND: http://omicx-web-be-9701-service:9701
+        CS_LOG_DIR: /data/logs
+        CS_REDIS_HOST: 10.106.26.82:6379
+        CS_REDIS_PASSWORD: Metech123
+        CS_SOCKET_PATH: /socket-server
+        CS_ACD_ASM_URL: http://omicx-acd-asm-chat-6970-service:6970
+        CS_ACD_ASM_EMAIL_URL: http://omicx-acd-asm-email-7990-service:7990
+        CUSTOMER_SOCKET_KEY: Livechat@Metech
+        KAFKA_GROUP_ID: OMICX-SOCKET
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_LOG_LEVEL: "4"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        SECRET_KEY: Admin_C421AAEE0D114E9C
+        ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
+        CS_PING_INTERVAL: "15000"
+        CS_PING_TIMEOUT: "60000"
+        LOG_LEVEL: "info"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3000
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: tenant-registration
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/tenant_registration
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/tenant-registration/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/log4net.config
+        name: config
+        subPath: log4net.config
+      - mountPath: /app/wwwroot
+        name: homedata
+    volumes: 
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 9755
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: web-be
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/backend
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/web-be/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/log4net.config
+        name: config
+        subPath: log4net.config
+      - mountPath: /app/wwwroot
+        name: homedata
+      - mountPath: /app/appconfig.json
+        name: config
+        subPath: appconfig.json
+      - mountPath: /app/appconfig.production.json
+        name: config
+        subPath: appconfig.production.json        
+    volumes: 
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 9701
+    resources: 
+      limits:
+        cpu: "2"
+        memory: 4Gi
+      requests:
+        cpu: "1"
+        memory: 64Mi
+  - name: web-fe
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/frontend
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/web-fe/*"
+        mountPath: "/etc/nginx/conf.d/nginx.conf" 
+        subPath: "nginx.conf"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /etc/nginx/conf.d/nginx.conf
+        name: config
+        subPath: nginx.conf
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 80
+    resources: 
+      limits:
+        cpu: "1"
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 16Mi 
+  - name: omicx-sync-tracker
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/omicx_sync_tracker
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/sync-tracker/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/wwwroot
+        name: homedata
+      - mountPath: /app/log4net.config
+        name: config
+        subPath: log4net.config        
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 9788
+    resources: 
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: omicx-sync-worker
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/omicx_sync_worker
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/sync-worker/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: 
+      - mountPath: /app/wwwroot
+        name: homedata
+      - mountPath: /app/log4net.config
+        name: config
+        subPath: log4net.config        
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    service:
+      type: ClusterIP
+      port: 9766
+    resources: 
+      limits:
+        cpu: "1"
+        memory: 1024Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: acd-zalo-connector
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-zalo-connector
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CLIENT_ID: ACD-ZALO-CONNECTOR
+        KAFKA_CONNECTION_TIMEOUT: 90000
+        KAFKA_AUTHENTICATION_TIMEOUT: 60000
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        DATABASE_URI: 'mongodb://root:Abcd54321@172.16.86.29:27017/omicx-channel-manager'
+        GRPC_URL_CONNECTION: "0.0.0.0:6868"
+        REDIS_IP: 10.106.26.82
+        REDIS_PORT: 6379
+        REDIS_PASSWORD: Metech123
+        GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
+    volumeMounts:
+      - mountPath: /public
+        name: homedata	
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data	
+    service:
+      type: ClusterIP
+      port: 6969
+      grpcPort: 6868
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: acd-backend
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-backend
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        NODE_ENV: development
+        PORT: 3006
+        ENABLE_ORM_LOGS: true
+        ENABLE_DOCUMENTATION: true
+        GRPC_URL: 0.0.0.0:50051
+        ASSIGNMENT_URL: omicx-acd-agent-assignment-6971-service:6972
+        ZALO_CONNECTOR_URL: omicx-acd-zalo-connector-6969-service:6868
+        FACEBOOK_CONNECTOR_URL: omicx-acd-facebook-connector-7979-service:7878
+        NOTIFICATION_SERVER_URL: http://omicx-socket-server-3000-service:3000
+        EMAIL_CONNECTOR_URL: omicx-acd-email-connector-8001-service:8000
+        DB_TYPE: mongodb
+        DB_HOST: 172.16.86.29
+        DB_PORT: 27017
+        DB_USERNAME: root
+        DB_PASSWORD: Metech123
+        DB_DATABASE: omicx-channel-manager
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_GROUP_ID: ACD_BACKEND_CHAT
+        KAFKA_CONNECTION_TIMEOUT: 30000
+        KAFKA_AUTHENTICATION_TIMEOUT: 10000
+        KAFKA_REAUTHENTICATION_THRESHOLD: 10000
+        KAFKA_TRANSACTION_TIMEOUT: 30000
+        KAFKA_RESPONSE_TIMEOUT: 30000
+        KAFKA_SASL_ENABLED: true
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        VIBER_CONNECTOR_URL: omicx-acd-viber-connector-7996-service:7997
+        TELEGRAM_CONNECTOR_URL: omicx-acd-telegram-connector-7992-service:7993
+        WS_CONNECTOR_URL: omicx-acd-whatsapp-connector-7994-service:7995
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3006
+      grpcPort: 50051
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: acd-agent-assignment
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-agent-assignment
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        GRPC_URL_CONNECTION: "0.0.0.0:6972"
+        GRPC_URL_PACKAGE: "com.metech.acd"
+        DATABASE_URI: 'mongodb://root:Metech123@172.16.86.29:27017/omicx-channel-manager'
+        GRPC_URL_CONNECTION_ACD_ASM: "omicx-acd-asm-chat-6970-service:6973"
+        GRPC_URL_CONNECTION_ACD_ASM_EMAIL: "omicx-acd-asm-email-7990-service:7991"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 6971
+      grpcPort: 6972
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: acd-asm-chat
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-asm-chat
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        DB_TYPE: mssql
+        DB_HOST: 10.106.26.240
+        DB_PORT: 1433
+        DB_USERNAME: mptadmin
+        DB_PASSWORD: "MPT@dmin@2023"
+        DB_DATABASE: ACD_ASM
+        GRPC_URL_CONNECTION: "0.0.0.0:6973"
+        GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CONNECTION_TIMEOUT: "30000"
+        KAFKA_GROUP_ID: ASM_CHAT
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_RESPONSE_TIMEOUT: "30000"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        TIMEOUT_AGENT_LOGOUT: "300000"
+        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_PASSWORD: Metech123
+        REDIS_PING_INTERVAL: 10000
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 6970
+      grpcPort: 6973
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: acd-facebook-connector
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-facebook-connector
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CLIENT_ID: ACD-FACEBOOK-CONNECTOR
+        KAFKA_CONNECTION_TIMEOUT: 90000
+        KAFKA_AUTHENTICATION_TIMEOUT: 60000
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        DATABASE_URI: 'mongodb://root:Abcd54321@172.16.86.29:27017/omicx-channel-manager'
+        GRPC_URL_CONNECTION: "0.0.0.0:7878"
+        REDIS_IP: 10.106.26.82
+        REDIS_PORT: "6379"
+        REDIS_PASSWORD: "Metech123"
+        SOCIAL_URL: 'https://ps1.omicx.vn/static/socials'
+        GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
+    volumeMounts:
+      - mountPath: /public
+        name: homedata	
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data	
+    service:
+      type: ClusterIP
+      port: 7979
+      grpcPort: 7878
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 64Mi
+  - name: social-configurations
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/social-configurations
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        DATABASE_URI: 'mongodb://root:Metech123@172.16.86.29:27017/omicx-channel-manager'
+        REDIS_IP: 10.106.26.82
+        REDIS_PORT: "6379"
+        REDIS_PASSWORD: "Metech123"
+        KAFKA_ENABLED: true
+        KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://schema-headless:8081"
+        KAFKA_GROUP_ID: SOCIAL-CONFIGURATIONS
+        KAFKA_CONSUMER_AUTO_COMMIT: false
+        KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_AUTH_USER: kafka-admin
+        KAFKA_SASL_AUTH_PASSWORD: Metech123
+        EMAIL_FETCH_STATUS_TOPIC: ACD.Email.FetchStatus
+        GCLOUD_CLIENT_SECRET: "U2FsdGVkX1+0nd7NokbkobnxbfK0IyDkIfCzeWpCWxQtn8djQpauhPl01aQOes9+5IenGh1rrdJqA179tW2Y7A=="
+        AZURE_CLIENT_SECRET: "U2FsdGVkX18/cZVE0GCt1CxwkOjaB9S3JfSJSC3fre4qjqshENuKOIpogI73qsmfzLra8fKP6DzA2AJuLkfZYA=="
+        OAUTH2_REDIRECT_URL: https://ps1.omicx.vn/api/v1/email/oauth2
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 7980
+      grpcPort: 7989
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 64Mi
+  - name: chat-statistics
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/chat-statistics
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/chat-statistics/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 80
+    resources: 
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 64Mi
+  - name: acd-email-connector
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-email-connector
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        KAFKA_ENABLED: true
+        KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://schema-headless:8081"
+        KAFKA_GROUP_ID: ACD-EMAIL-CONNECTOR
+        KAFKA_CONSUMER_AUTO_COMMIT: false
+        KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_AUTH_USER: kafka-admin
+        KAFKA_SASL_AUTH_PASSWORD: Metech123
+        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_DATABASE: 8
+        REDIS_PASSWORD: "Metech123"
+        REDIS_PING_INTERVAL: 10000
+        LOG_LEVEL: info
+        EMAIL_FETCH_CRON: "0 * * * * *"
+        EMAIL_MESSAGE_TOPIC: ACD.Email.NewEmail
+        EMAIL_REFRESH_TOKEN_TOPIC: Config.Email.RefreshToken
+        SERVER_PORT: 8000
+        SOCIAL_CONFIG_RPC_URL: omicx-social-configurations-7980-service:7989
+        EMAIL_ATTACHMENT_ROOT_DIR: '/opt/data'
+    volumeMounts:
+      - mountPath: /opt/data
+        name: homedata	
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data	
+    service:
+      type: ClusterIP
+      port: 8001
+      grpcPort: 8000
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  - name: acd-asm-email
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-asm-email
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        DB_TYPE: mssql
+        DB_HOST: "10.106.26.240"
+        DB_PORT: "1433"
+        DB_USERNAME: "mptadmin"
+        DB_PASSWORD: "MPT@dmin@2023"
+        DB_DATABASE: "ACD_ASM_EMAIL"
+        GRPC_URL_CONNECTION: "0.0.0.0:7991"
+        GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
+        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_CONNECTION_TIMEOUT: "30000"
+        KAFKA_GROUP_ID: ASM_EMAIL
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
+        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_RESPONSE_TIMEOUT: "30000"
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        TIMEOUT_AGENT_LOGOUT: "300000"
+        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_PASSWORD: Metech123
+        REDIS_PING_INTERVAL: 10000
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 7990
+      grpcPort: 7991
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 1024Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+  - name: elastic-sync
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/elastic-sync
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        ELASTICSEARCH_URIS: "http://10.106.26.63:9200"
+        ELASTICSEARCH_USERNAME: "elastic"
+        ELASTICSEARCH_PASSWORD: "Metech123"
+        ELASTICSEARCH_DEFAULT_INDEX: "default_index"
+        KAFKA_BOOTSTRAP_SERVER: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        INSTANCE_ID: "-mkt-elastic-synchronizer-dev"
+        KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+        KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
+        KAFKA_SECURITY_USERNAME: kafka-admin
+        KAFKA_SECURITY_PASSWORD: Metech123
+        KAFKA_SCHEMA_SERVER: "http://schema-headless:8081"
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 8081    
+    resources: 
+      limits:
+        cpu: 1000m
+        memory: 1000Mi
+      requests:
+        cpu: 128m
+        memory: 64Mi
+  - name: normalization-service
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/normalization-service
+    pullPolicy: Always
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/normalization-service/*"
+        mountPath: "/app/config/log.ini" 
+        subPath: "log.ini"
+    env: {}
+    envs:
+      secret: {}
+      config:
+        BASE_FOLDER: public/files_upload
+        ACCESS_LOG_PATH: '-'
+        ERROR_LOG_PATH: '-'
+        KAFKA_BOOTSTRAP_SERVERS: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_GROUP_ID: NORMALIZATION_SERVICE
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        PORT: 8088
+    volumeMounts:
+      - mountPath: /app/public
+        name: homedata	
+    volumes:
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data	
+    service:
+      type: ClusterIP
+      port: 8088
+    resources: 
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 256Mi
+  - name: email-notification
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/email-notification
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        AGENT_CREATED_TOPIC: CRM.Report.AgentsCreated
+        AGENT_CHANGE_PASSWORD_TOPIC: CRM.AgentChangePassword
+        AGENT_CHANGE_STATUS_TOPIC: CRM.AgentChangeStatus
+        TENANT_REGISTERED_TOPIC: Omicx.TenantRegistered
+        TENANT_CHANGED_STATUS_TOPIC: Omicx.TenantChangedStatus
+        TENANT_RESET_PASSWORD: CRM.ResetAdminPassword
+        EMAIL_SENDING_TOPIC: ACD.Email.Sending
+        DOMAIN_NAME: https://ps1.omicx.vn 
+        SOCIAL_NOTIFICATION_URL: http://omicx-social-configurations-7980-service:7980/api/v1
+        KAFKA_ENABLED: true
+        KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://schema-headless:8081"
+        KAFKA_GROUP_ID: EMAIL-NOTIFICATION
+        KAFKA_CONSUMER_AUTO_COMMIT: false
+        KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
+        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_AUTH_USER: kafka-admin
+        KAFKA_SASL_AUTH_PASSWORD: Metech123
+    service:
+      type: ClusterIP
+      port: 7980
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 64Mi
+  - name: authorization-service
+    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/authorization-service
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: 
+      - name: "config"
+        folder: "resources/authorization-service/*"
+        mountPath: "/app/appsettings.json" 
+        subPath: "appsettings.json"
+    volumeMounts: 
+      - mountPath: /app/log4net.config
+        name: config
+        subPath: log4net.config
+      - mountPath: /app/wwwroot
+        name: homedata
+    volumes: 
+      - name: homedata
+        persistentVolumeClaim:
+          claimName: pvc-omicx-home-data
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    service:
+      type: ClusterIP
+      port: 21021
+    resources: 
+      limits:
+        cpu: "1"
+        memory: 1Gi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentag: 'a8042c5c'
+  # targetMemoryUtilizationPercentag: 'a8042c5c'
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

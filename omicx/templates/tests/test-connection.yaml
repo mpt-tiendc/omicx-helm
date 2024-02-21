@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "omicx.fullname" . }}-test-connection"
+  labels:
+    {{- include "omicx.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "omicx.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

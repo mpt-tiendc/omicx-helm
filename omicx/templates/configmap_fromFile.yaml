@@ -1,0 +1,17 @@
+{{- $fullname := include "omicx.name" . }}
+{{- range $deployment := .Values.deployments }}
+{{- if $deployment.configmapFromFile -}}
+{{- range $config := $deployment.configmapFromFile }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $fullname }}-{{ $deployment.name }}-{{ $config.name }}-configmap"
+data:
+  {{ range $path, $_ :=  $.Files.Glob  $config.folder }}
+  {{ base $path }}: |- {{ range $.Files.Lines $path }}
+  {{ . | indent 4 }}{{ end }}
+  {{ end }}
+---
+{{- end }}
+{{- end -}}
+{{- end }}

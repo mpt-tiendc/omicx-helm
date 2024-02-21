@@ -1,0 +1,87 @@
+{
+    "project": 0,
+    "remoteServiceBaseUrl": "https://ps1.omicx.vn",
+    "tenantSubscriptionUrl": "https://ps1.omicx.vn/tenant-registration",
+    "appBaseUrl": "https://ps1.omicx.vn",
+    "agentStatusManagementUrl": "https://ps1.omicx.vn/asm",
+    "campaignPlanningUrl": "https://ps1.omicx.vn/campaign-planning",
+    "channelManagerServiceBaseUrl": "https://ps1.omicx.vn/channel-manager",
+    "channelGWBaseUrl": "https://ps1.omicx.vn/channelgw",
+    "reportBaseUrl": "https://ps1.omicx.vn/reporting",
+    "audioUrl": "https://ps1.omicx.vn/static/recording/",
+    "audioSurveyUrl": "https://ps1.omicx.vn/static/survey/",
+    "freeSwitchBackend": "https://ps1.omicx.vn/fsapi",
+    "avatarUrl": "https://ps1.omicx.vn/static/image/",
+    "fileUrl": "https://ps1.omicx.vn/static",
+    "fileExportUrl": "https://ps1.omicx.vn/static/jobfile/",
+  	"fileImportUrl": "https://ps1.omicx.vn/static/files_upload/",
+    "socialUrl": "https://ps1.omicx.vn/static/socials/",
+    "mediaUrl": "https://ps1.omicx.vn",
+    "telesaleTransferNumber": "179004",
+    "cskhTransferNumber": "179005",
+    "outboundSurveyNumber": "40600",
+    "inboundSurveyNumber": "40601",
+    "intervalCheckError": 20000,
+    "fsSocketServer": "wss://proxy.metechvn.com:7443",
+    "fsSipDomain": "voice.metechvn.com",
+    "fsSipPort": 5090,
+    "pbxIntegrationUrl": "https://ps1.omicx.vn/fsapi",
+    "productCatalogUrl": "https://ps1.omicx.vn/catalog",
+    "appIdFB": "811725996448810",
+    "acdBackendServiceBaseUrl": "http://omicx-acd-backend-3006-service:3006",
+    "zaloConnectorlUrl": "http://omicx-acd-zalo-connector-6969-service:6969",
+    "acdAsmUrl": "https://ps1.omicx.vn/acd-asm",
+    "phoneNumberRegex": "^(0|1|84|\\+84)(\\d{9,12})$",
+    "PrefixAudioUrl": "https://ps1.omicx.vn/file/",
+  	"chatStatisticsUrl": "https://ps1.omicx.vn",
+    "tenancy": {
+      "multitenancy": true,
+      "defaultTenancy": ""
+    },
+    "reCaptcha": {
+      "reCaptcha": false,
+      "key": "NkxjYS1UQWFBQUFBQURXbWtzTlBsdzhDX1cxR1BMOVZoNDRRZlF0bw==",
+      "hl": "vi"
+    },
+    "sipJsLogLevel": "error",
+    "socketIoConfig": {
+      "url": "https://ps1.omicx.vn",
+      "options": {
+        "path": "/socket-server",
+        "autoConnect": false,
+        "reconnection": false,
+        "transports": [
+          "websocket"
+        ]
+      }
+    },
+    "socketIoCallConfig": {
+      "url": "https://ps1.omicx.vn",
+      "options": {
+        "path": "/call-server",
+        "autoConnect": false,
+        "reconnection": false,
+        "transports": [
+          "websocket"
+        ]
+      }
+    },
+    "localeMappings": [
+      {
+        "from": "pt-BR",
+        "to": "pt"
+      },
+      {
+        "from": "zh-CN",
+        "to": "zh"
+      },
+      {
+        "from": "he-IL",
+        "to": "he"
+      }
+    ],
+    "campaignReport": "https://statistic.omicx.vn/public/dashboards/0CuMvcjtjQ5k5dy2LMEg4RAulY3ktCBTR4MjzEiQ?org_slug=default&p_campaign=2&p_daterange=d_this_year",
+    "ticketReport": "https://statistic.omicx.vn/public/dashboards/feBK7AlDEj324Bx3yHhTmqTVaumXa6wvY4AidR6w?org_slug=default&p_daterange=d_this_year&refresh=600",
+    "callReport": "https://statistic.omicx.vn/public/dashboards/Sbmwcc4O8Cf3JAhkVNdBvFdyVoJ0O2HsmyH9TdHb?org_slug=default%2Fpublic%2Fdashboards%2FSbmwcc4O8Cf3JAhkVNdBvFdyVoJ0O2HsmyH9TdHb%3Forg_slug%3Ddefault&p_daterange=d_this_year&refresh=600",
+    "chatReport": ""
+  }

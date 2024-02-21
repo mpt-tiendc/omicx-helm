@@ -1,0 +1,14 @@
+{{- $fullname := include "omicx.name" . }}
+{{- range $deployment := .Values.deployments }}
+{{- if $deployment.envs.config -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $fullname }}-{{ $deployment.name }}-configmap"
+data:
+  {{- range $key, $val := $deployment.envs.config }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end}}
+---
+{{- end -}}
+{{- end }}
