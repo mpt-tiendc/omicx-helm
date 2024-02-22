@@ -54,15 +54,16 @@ deployments:
         folder: "resources/nginx/*"
         mountPath: "/etc/nginx/conf.d" 
         subPath: {}
+      - name: "config1"
+        folder: "resources/nginx-conf/*"
+        mountPath: "/usr/src/app/nginx.conf" 
+        subPath: "nginx.conf"
     env: {}
     envs:
       secret: {}
       config:
         BACKEND_URL: http://omicx-authorization-service-21021-service.default.svc.cluster.local:21021/api/Authorization/CheckPermission
     volumeMounts:
-      - mountPath: /usr/src/app/nginx.conf
-        name: config
-        subPath: nginx.conf
       - mountPath: /home/data
         name: homedata
     volumes:
