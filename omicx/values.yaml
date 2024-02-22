@@ -135,7 +135,7 @@ deployments:
         DB_DATABASE: fusionpbx
         DB_HOST: 10.106.26.24
         DB_PASSWORD: Default#Postgres@6699
-        DB_PORT: "15432"
+        DB_PORT: "5432"
         DB_TYPE: postgres
         DB_USERNAME: postgres
         JWT_EXPIRES_IN: 1d
@@ -358,6 +358,7 @@ deployments:
         DB_USERNAME: root
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
+        LOG_LEVEL: info
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
         KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
         KAFKA_CONNECTION_TIMEOUT: "30000"
