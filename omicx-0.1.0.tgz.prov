@@ -1,0 +1,29 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 1.16.0
+description: A Helm chart for Kubernetes
+name: omicx
+type: application
+version: 0.1.0
+
+...
+files:
+  omicx-0.1.0.tgz: sha256:064b848b2d2ce1ba1657d4e137ff5b7de66f23280b096bc690069b6b021edca9
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJl1we6CRAkelJzgtLE/wAAt8gQAJeDsC/A5tOAVMqNwVnivN/I
+g5vwTdBpgkcPGa5cw/MGY/5Mp6//rxlaMupPbeYA038qFrtnvdZZUPE3DER1n1g1
+EeC/aYV114BDLXYBv8p19FJj7Jxu6BI6ZToKFYo/Jf6t/LHfgjiMf9QZ5TfaaaAS
+/4woCLFE5M/2vX5JNNEmNNuVyrp6CeLatBYG7EW4+jg1VxIFTFYiHGZ1SBK35UBR
+0dS33AAaNZHfgbNtVonJ2l01U11gBxxhbuRbL4472NXNJjdJx84ncIDY80uTogAS
+IKCmiMG7f5fQOY39hLjUuHffyi7mSI8QE4I/+7dgFq88MzY9QpChnd2Fh0G7MxSk
+Wb84yK1GAEBiI48zN+2pcrHO5KoIY7iZUpZPhY8+02rFBMSnPc+h01yOlhP3FyyT
+e4/kccxWYnjQPJRHSwBJIxSkZInfVgK1NadnwnFAMoi+LZsIf0PxFvACAFlEImMe
+F0IQCnw33bacXglb8ZD4fL3Yoc6IvHMoPsBOsMo0z+k4/y6lcNGG18qy8i+J/6Kv
+Qdq4EWnEOaIFp6hooZsk+Uk++Dl6z5T4XRRu2/XO+40XfwWB4J4tdcgtjtvkLE3b
+xG88wbdrx9MGRfAkQ0wvztfbqHSRAf3rAW7oLElD4Ib8SvJiIyN2J4V8zrwyXP9M
+ti+i37A2Qc1+A7RkEYTj
+=MoR1
+-----END PGP SIGNATURE-----

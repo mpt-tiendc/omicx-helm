@@ -1,6 +1,6 @@
 {{- $fullname := include "omicx.name" . }}
 {{- range $deployment := .Values.deployments }}
-{{- if $deployment.envs.config -}}
+{{- if $deployment.envs.config }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,5 +10,5 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end}}
 ---
-{{- end -}}
+{{- end }}
 {{- end }}
