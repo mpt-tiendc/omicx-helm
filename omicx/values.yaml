@@ -18,7 +18,6 @@ volumeClaims:
       - ReadOnlyMany
     storage: 10Gi
     volumeMode: Filesystem
-    storageClassName: nfs-client
   - name: pvc-omicx-channelmanager-data
     accessModes:
       - ReadWriteOnce
@@ -26,7 +25,6 @@ volumeClaims:
       - ReadOnlyMany
     storage: 10Gi
     volumeMode: Filesystem
-    storageClassName: nfs-client
 
 imagePullSecrets: []
 nameOverride: ""
@@ -82,7 +80,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: ProductCatalog
-        DB_HOST: 10.106.26.240
+        DB_HOST: 10.106.26.228
         DB_PASSWORD: MPT@dmin@2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -121,7 +119,7 @@ deployments:
         ADMIN_PASSWORD: F88@Admin#123
         ADMIN_USERNAME: f88
         DB_DATABASE: fusionpbx
-        DB_HOST: 10.106.26.193
+        DB_HOST: 10.106.26.24
         DB_PASSWORD: Default#Postgres@6699
         DB_PORT: "15432"
         DB_TYPE: postgres
@@ -185,7 +183,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: OMICXAUTODIALER
-        DB_HOST: 10.106.26.240
+        DB_HOST: 10.106.26.228
         DB_PASSWORD: MPT@dmin@2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -234,7 +232,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: OMICXAUTODIALER
-        DB_HOST: 10.106.26.240
+        DB_HOST: 10.106.26.228
         DB_PASSWORD: MPT@dmin@2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -284,7 +282,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: OMICXASM
-        DB_HOST: 10.106.26.240
+        DB_HOST: 10.106.26.228
         DB_PASSWORD: MPT@dmin@2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -899,7 +897,7 @@ deployments:
       secret: {}
       config:
         DB_TYPE: mssql
-        DB_HOST: 10.106.26.240
+        DB_HOST: 10.106.26.228
         DB_PORT: 1433
         DB_USERNAME: mptadmin
         DB_PASSWORD: "MPT@dmin@2023"
@@ -1116,7 +1114,7 @@ deployments:
       secret: {}
       config: 
         DB_TYPE: mssql
-        DB_HOST: "10.106.26.240"
+        DB_HOST: "10.106.26.228"
         DB_PORT: "1433"
         DB_USERNAME: "mptadmin"
         DB_PASSWORD: "MPT@dmin@2023"
