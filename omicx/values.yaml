@@ -60,6 +60,9 @@ deployments:
       config:
         BACKEND_URL: http://omicx-authorization-service-21021-service.default.svc.cluster.local:21021/api/Authorization/CheckPermission
     volumeMounts:
+      - mountPath: /usr/src/app/nginx.conf
+        name: config
+        subPath: nginx.conf
       - mountPath: /home/data
         name: homedata
     volumes:
@@ -399,7 +402,7 @@ deployments:
         FACEBOOK_VERIFY_TOKEN: Metech#FB@123
         INSTANCE_ID: CHANNELGW
         JSON_CDR_TOPIC: json_cdr
-        KAFKA_SECURITY_LOGIN_MODULE: org.apache.kafka.common.security.plain.PlainLoginModule
+        KAFKA_SECURITY_LOGIN_MODULE: org.apache.kafka.common.security.scram.ScramLoginModule
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
         KAFKA_SECURITY_PASSWORD: Metech123
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -673,10 +676,6 @@ deployments:
     envs:
       secret: {}
       config: {}
-    volumeMounts: 
-      - mountPath: /etc/nginx/conf.d/nginx.conf
-        name: config
-        subPath: nginx.conf
     volumes: {}
     service:
       type: ClusterIP
