@@ -23,6 +23,12 @@ volumeClaims:
       - ReadWriteMany
       - ReadOnlyMany
     storage: 10Gi
+  - name: pvc-omicx-cci-public
+    accessModes:
+      - ReadWriteOnce
+      - ReadWriteMany
+      - ReadOnlyMany
+    storage: 10Gi
 
 imagePullSecrets: []
 nameOverride: ""
@@ -769,7 +775,7 @@ deployments:
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Abcd54321@172.16.86.29:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
         GRPC_URL_CONNECTION: "0.0.0.0:6868"
         REDIS_IP: 10.106.26.82
         REDIS_PORT: 6379
@@ -817,7 +823,7 @@ deployments:
         NOTIFICATION_SERVER_URL: http://omicx-socket-server-3000-service:3000
         EMAIL_CONNECTOR_URL: omicx-acd-email-connector-8001-service:8000
         DB_TYPE: mongodb
-        DB_HOST: 172.16.86.29
+        DB_HOST: 10.106.26.222
         DB_PORT: 27017
         DB_USERNAME: root
         DB_PASSWORD: Metech123
@@ -865,7 +871,7 @@ deployments:
       config:
         GRPC_URL_CONNECTION: "0.0.0.0:6972"
         GRPC_URL_PACKAGE: "com.metech.acd"
-        DATABASE_URI: 'mongodb://root:Metech123@172.16.86.29:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
         GRPC_URL_CONNECTION_ACD_ASM: "omicx-acd-asm-chat-6970-service:6973"
         GRPC_URL_CONNECTION_ACD_ASM_EMAIL: "omicx-acd-asm-email-7990-service:7991"
     volumeMounts: {}
@@ -950,7 +956,7 @@ deployments:
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Abcd54321@172.16.86.29:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
         GRPC_URL_CONNECTION: "0.0.0.0:7878"
         REDIS_IP: 10.106.26.82
         REDIS_PORT: "6379"
@@ -988,7 +994,7 @@ deployments:
     envs:
       secret: {}
       config:
-        DATABASE_URI: 'mongodb://root:Metech123@172.16.86.29:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
         REDIS_IP: 10.106.26.82
         REDIS_PORT: "6379"
         REDIS_PASSWORD: "Metech123"
