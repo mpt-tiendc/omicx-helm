@@ -130,7 +130,7 @@ deployments:
         KAFKA_CONNECTION_TIMEOUT: "3000"
         KAFKA_GROUP_ID: CCI
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
         KAFKA_SASL_PLAINTEXT_ENABLED: "true"
@@ -192,7 +192,7 @@ deployments:
         KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
         KAFKA_GROUP_ID: PLANNING
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -242,7 +242,7 @@ deployments:
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: EXECUTION
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -292,7 +292,7 @@ deployments:
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -347,7 +347,7 @@ deployments:
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: AUDIT
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -393,7 +393,7 @@ deployments:
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
         KAFKA_SECURITY_USERNAME: kafka-admin
         LOG_DIR: /var/log/channelgw
-        SCHEMA_REGISTRY_URL: http://schema-headless:8081
+        SCHEMA_REGISTRY_URL: http://omicx-schema-headless:8081
         SOCIAL_WEBHOOK_TOPIC: social_webhook
     volumeMounts: 
       - mountPath: /data/
@@ -823,7 +823,7 @@ deployments:
         DB_PASSWORD: Metech123
         DB_DATABASE: omicx-channel-manager
         KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_GROUP_ID: ACD_BACKEND_CHAT
         KAFKA_CONNECTION_TIMEOUT: 30000
         KAFKA_AUTHENTICATION_TIMEOUT: 10000
@@ -907,7 +907,7 @@ deployments:
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM_CHAT
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -994,7 +994,7 @@ deployments:
         REDIS_PASSWORD: "Metech123"
         KAFKA_ENABLED: true
         KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
-        KAFKA_SCHEMA_REGISTRY_URL: "http://schema-headless:8081"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: SOCIAL-CONFIGURATIONS
         KAFKA_CONSUMER_AUTO_COMMIT: false
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -1062,7 +1062,7 @@ deployments:
       config: 
         KAFKA_ENABLED: true
         KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
-        KAFKA_SCHEMA_REGISTRY_URL: "http://schema-headless:8081"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: ACD-EMAIL-CONNECTOR
         KAFKA_CONSUMER_AUTO_COMMIT: false
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -1124,7 +1124,7 @@ deployments:
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM_EMAIL
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
-        KAFKA_REGISTRY: http://schema-headless:8081/
+        KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -1171,7 +1171,7 @@ deployments:
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
         KAFKA_SECURITY_USERNAME: kafka-admin
         KAFKA_SECURITY_PASSWORD: Metech123
-        KAFKA_SCHEMA_SERVER: "http://schema-headless:8081"
+        KAFKA_SCHEMA_SERVER: "http://omicx-schema-headless:8081"
     volumeMounts: {}
     volumes: {}
     service:
@@ -1250,7 +1250,7 @@ deployments:
         SOCIAL_NOTIFICATION_URL: http://omicx-social-configurations-7980-service:7980/api/v1
         KAFKA_ENABLED: true
         KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
-        KAFKA_SCHEMA_REGISTRY_URL: "http://schema-headless:8081"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: EMAIL-NOTIFICATION
         KAFKA_CONSUMER_AUTO_COMMIT: false
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
