@@ -17,14 +17,12 @@ volumeClaims:
       - ReadWriteMany
       - ReadOnlyMany
     storage: 10Gi
-    volumeMode: Filesystem
   - name: pvc-omicx-channelmanager-data
     accessModes:
       - ReadWriteOnce
       - ReadWriteMany
       - ReadOnlyMany
     storage: 10Gi
-    volumeMode: Filesystem
 
 imagePullSecrets: []
 nameOverride: ""
