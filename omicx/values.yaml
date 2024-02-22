@@ -79,10 +79,10 @@ deployments:
       config: 
         DB_DATABASE: ProductCatalog
         DB_HOST: 10.106.26.228
-        DB_PASSWORD: MPT@dmin@2023
+        DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: mptadmin
+        DB_USERNAME: crmdbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         LOG_DIR: /app/logs/omicx-product-catalog
@@ -182,10 +182,10 @@ deployments:
       config: 
         DB_DATABASE: OMICXAUTODIALER
         DB_HOST: 10.106.26.228
-        DB_PASSWORD: MPT@dmin@2023
+        DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: mptadmin
+        DB_USERNAME: crmdbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
@@ -231,10 +231,10 @@ deployments:
       config: 
         DB_DATABASE: OMICXAUTODIALER
         DB_HOST: 10.106.26.228
-        DB_PASSWORD: MPT@dmin@2023
+        DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: mptadmin
+        DB_USERNAME: crmdbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         EXECUTION_REPEAT_INTERVAL: "15000"
@@ -281,10 +281,10 @@ deployments:
       config: 
         DB_DATABASE: OMICXASM
         DB_HOST: 10.106.26.228
-        DB_PASSWORD: MPT@dmin@2023
+        DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: mptadmin
+        DB_USERNAME: crmdbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
@@ -897,8 +897,8 @@ deployments:
         DB_TYPE: mssql
         DB_HOST: 10.106.26.228
         DB_PORT: 1433
-        DB_USERNAME: mptadmin
-        DB_PASSWORD: "MPT@dmin@2023"
+        DB_USERNAME: crmdbadmin
+        DB_PASSWORD: "OmicxCrm2023"
         DB_DATABASE: ACD_ASM
         GRPC_URL_CONNECTION: "0.0.0.0:6973"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
@@ -1114,8 +1114,8 @@ deployments:
         DB_TYPE: mssql
         DB_HOST: "10.106.26.228"
         DB_PORT: "1433"
-        DB_USERNAME: "mptadmin"
-        DB_PASSWORD: "MPT@dmin@2023"
+        DB_USERNAME: "crmdbadmin"
+        DB_PASSWORD: "OmicxCrm2023"
         DB_DATABASE: "ACD_ASM_EMAIL"
         GRPC_URL_CONNECTION: "0.0.0.0:7991"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
