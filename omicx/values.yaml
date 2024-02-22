@@ -17,18 +17,24 @@ volumeClaims:
       - ReadWriteMany
       - ReadOnlyMany
     storage: 10Gi
+    volumeMode: Filesystem
+    storageClassName: nfs-provision
   - name: pvc-omicx-channelmanager-data
     accessModes:
       - ReadWriteOnce
       - ReadWriteMany
       - ReadOnlyMany
     storage: 10Gi
+    volumeMode: Filesystem
+    storageClassName: nfs-provision
   - name: pvc-omicx-cci-public
     accessModes:
       - ReadWriteOnce
       - ReadWriteMany
       - ReadOnlyMany
     storage: 10Gi
+    volumeMode: Filesystem
+    storageClassName: nfs-provision
 
 imagePullSecrets: []
 nameOverride: ""
