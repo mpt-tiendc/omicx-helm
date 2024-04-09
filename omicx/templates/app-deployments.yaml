@@ -14,9 +14,16 @@ spec:
       labels:
         app: "{{ $fullname }}-{{ $deployment.name }}-deployment"
     spec:
+      {{- if $.Values.global.hostAliases }}
+      hostAliases: {{- include "omicx.tplvalues.render" (dict "value" $.Values.global.hostAliases "context" $) | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ $deployment.name }}
-          image: "{{ $deployment.image }}:{{ $deployment.tag }}"
+          {{- if $deployment.customImage }}
+          image: "{{ $deployment.customImage }}:{{ $deployment.tag }}"
+          {{- else }}
+          image: "{{ $.Values.global.baseImage }}/{{ $deployment.image }}:{{ $deployment.tag }}"
+          {{- end }}
           imagePullPolicy: {{ $deployment.pullPolicy }}
           env:
             {{- with $deployment.env }}
@@ -26,6 +33,14 @@ spec:
             {{- if $deployment.configmap }}
             - configMapRef:
                 name: {{ $deployment.configmap }}
+            {{- end }}
+            {{- if and $.Values.global $.Values.global.envs $.Values.global.envs.config }}
+            - configMapRef:
+                name: "{{ $fullname }}-global-configmap"
+            {{- end }}
+            {{- if and $.Values.global $.Values.global.envs $.Values.global.envs.secret }}
+            - configMapRef:
+                name: "{{ $fullname }}-global-secret"
             {{- end }}
             {{- if $deployment.envs.config }}
             - configMapRef:
