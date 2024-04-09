@@ -3,12 +3,22 @@ entries:
   omicx:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-02-22T15:22:44.972924+07:00"
+    created: "2024-04-09T11:27:02.256497+07:00"
     description: A Helm chart for Kubernetes
-    digest: 85e917acc548ff3ffe0a27da000300884723cd8c5019a391daad9d48cbaf830a
+    digest: eb9695a60561a9b25d4292ba9214a8ea5450e0c6e15df7c91f11b4b51aa8a746
     name: omicx
     type: application
     urls:
-    - https://mpt-tiendc.github.io/omicx-helm/omicx-0.1.0.tgz
+    - omicx-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-09T11:27:02.252668+07:00"
+    description: A Helm chart for Kubernetes
+    digest: 9ee0df5a5fad3db5e72b3d9d5fc5b7561fc4a1c739cb8e723518d52a5859a022
+    name: omicx
+    type: application
+    urls:
+    - omicx-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-22T15:22:44.967108+07:00"
+generated: "2024-04-09T11:27:02.249005+07:00"

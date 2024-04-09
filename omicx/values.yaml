@@ -10,6 +10,35 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+global:
+  baseImage: "docker-registry.metechvn.com/release/omicx-1.0.5.15"
+  # envs:
+  #   secret: 
+  #     GLOBAL_SECRET: GLOBAL_SECRET
+  #   config: 
+  #     GLOBAL_ENV: GLOBAL_ENV
+  # hostAliases:
+  # - ip: "10.106.26.167"
+  #   hostnames: "kafka-0"
+  # - ip: "10.106.26.12"
+  #   hostnames: "kafka-1"
+  # - ip: "10.106.26.129"
+  #   hostnames: "kafka-2"
+  # - ip: "10.106.26.228"
+  #   hostnames: "crm-db"
+  # - ip: "10.106.26.100"
+  #   hostnames: "report-db"
+  # - ip: "10.106.26.222"
+  #   hostnames: "chat-db"
+  # - ip: "10.106.26.82"
+  #   hostnames: "redis-host"
+  # - ip: "10.106.26.63"
+  #   hostnames: "elasticsearch-host"
+  # - ip: "10.106.26.24"
+  #   hostnames: "postgresql-host"
+  # - ip: "10.106.26.24"
+  #   hostnames: "omicx-schema-headless"
+
 volumeClaims:
   - name: pvc-omicx-home-data
     accessModes:
@@ -42,7 +71,7 @@ fullnameOverride: ""
 
 deployments:
   - name: nginx
-    image: docker-registry.metechvn.com/nginx-lua
+    customImage: docker-registry.metechvn.com/nginx-lua
     pullPolicy: IfNotPresent
     tag: "1.1-alpine"
     replicaCount: 1
@@ -81,7 +110,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: product-catalog
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/product_catalog
+    image: product_catalog
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -94,7 +123,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: ProductCatalog
-        DB_HOST: 10.106.26.228
+        DB_HOST: crm-db
         DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -118,7 +147,7 @@ deployments:
         cpu: 125m
         memory: 32Mi
   - name: cci
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/pbx-integration
+    image: pbx-integration
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -133,7 +162,7 @@ deployments:
         ADMIN_PASSWORD: F88@Admin#123
         ADMIN_USERNAME: f88
         DB_DATABASE: fusionpbx
-        DB_HOST: 10.106.26.24
+        DB_HOST: postgresql-host
         DB_PASSWORD: Default#Postgres@6699
         DB_PORT: "5432"
         DB_TYPE: postgres
@@ -141,7 +170,7 @@ deployments:
         JWT_EXPIRES_IN: 1d
         JWT_SECRET: metech@123
         KAFKA_AUTHENTICATION_TIMEOUT: "1000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CLIENT_ID: CCI
         KAFKA_CONNECTION_TIMEOUT: "3000"
         KAFKA_GROUP_ID: CCI
@@ -184,7 +213,7 @@ deployments:
         cpu: 125m
         memory: 32Mi
   - name: campaign-planning
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/campaign_planning
+    image: campaign_planning
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -197,7 +226,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: OMICXAUTODIALER
-        DB_HOST: 10.106.26.228
+        DB_HOST: crm-db
         DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -205,7 +234,7 @@ deployments:
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_GROUP_ID: PLANNING
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
@@ -233,7 +262,7 @@ deployments:
         cpu: 125m
         memory: 32Mi
   - name: campaign-execution
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/campaign_execution
+    image: campaign_execution
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -246,7 +275,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: OMICXAUTODIALER
-        DB_HOST: 10.106.26.228
+        DB_HOST: crm-db
         DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -254,7 +283,7 @@ deployments:
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         EXECUTION_REPEAT_INTERVAL: "15000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: EXECUTION
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
@@ -283,7 +312,7 @@ deployments:
         cpu: 125m
         memory: 32Mi
   - name: asm
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/omicx_asm
+    image: omicx_asm
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -296,7 +325,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: OMICXASM
-        DB_HOST: 10.106.26.228
+        DB_HOST: crm-db
         DB_PASSWORD: OmicxCrm2023
         DB_PORT: "1433"
         DB_TYPE: mssql
@@ -304,7 +333,7 @@ deployments:
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
@@ -321,7 +350,7 @@ deployments:
         TIMEOUT_AGENT_LOGOUT: "300000"
         PORT: "3003"
         CCI_GRPC_URL: omicx-cci-5580-service:3475
-        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_URL: redis://redis-host:6379
         REDIS_PASSWORD: Metech123
         REDIS_PING_INTERVAL: 10000
     volumeMounts: {}
@@ -338,7 +367,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: campaign-audit
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/campaign_audit
+    image: campaign_audit
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -351,7 +380,7 @@ deployments:
       secret: {}
       config: 
         DB_DATABASE: AutocallAudit
-        DB_HOST: 10.106.26.100
+        DB_HOST: report-db
         DB_PASSWORD: Metech123
         DB_PORT: "27017"
         DB_TYPE: mongodb
@@ -360,7 +389,7 @@ deployments:
         ENABLE_ORM_LOGS: "true"
         LOG_LEVEL: info
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: AUDIT
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
@@ -386,7 +415,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: channel-gateway
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/channel-gateway
+    image: channel-gateway
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -399,7 +428,7 @@ deployments:
       secret: {}
       config: 
         AGENT_STATUS_TOPIC: agent_status
-        BOOTSTRAP_SERVERS: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        BOOTSTRAP_SERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
         CALL_DTMF_TOPIC: call_dtmf
         FACEBOOK_VERIFY_TOKEN: Metech#FB@123
         INSTANCE_ID: CHANNELGW
@@ -430,7 +459,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: domain-registry
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/domain_registry
+    image: domain_registry
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -464,7 +493,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: job-common
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/job_common
+    image: job_common
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -501,7 +530,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: autocall-report
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/autocall-report
+    image: autocall-report
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -536,7 +565,7 @@ deployments:
         memory: 512Mi
 
   - name: socket-server
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/socket_server
+    image: socket_server
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -551,14 +580,14 @@ deployments:
         CS_CONSOLE_ENABLED: "true"
         CS_CRM_ADMIN_BACKEND: http://omicx-web-be-9701-service:9701
         CS_LOG_DIR: /data/logs
-        CS_REDIS_HOST: 10.106.26.82:6379
+        CS_redis-host: redis-host:6379
         CS_REDIS_PASSWORD: Metech123
         CS_SOCKET_PATH: /socket-server
         CS_ACD_ASM_URL: http://omicx-acd-asm-chat-6970-service:6970
         CS_ACD_ASM_EMAIL_URL: http://omicx-acd-asm-email-7990-service:7990
         CUSTOMER_SOCKET_KEY: Livechat@Metech
         KAFKA_GROUP_ID: OMICX-SOCKET
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_LOG_LEVEL: "4"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
@@ -582,7 +611,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: tenant-registration
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/tenant_registration
+    image: tenant_registration
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -619,7 +648,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: web-be
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/backend
+    image: backend
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -662,7 +691,7 @@ deployments:
         cpu: "1"
         memory: 64Mi
   - name: web-fe
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/frontend
+    image: frontend
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -690,7 +719,7 @@ deployments:
         cpu: 125m
         memory: 16Mi 
   - name: omicx-sync-tracker
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/omicx_sync_tracker
+    image: omicx_sync_tracker
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -727,7 +756,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: omicx-sync-worker
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/omicx_sync_worker
+    image: omicx_sync_worker
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -764,7 +793,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-zalo-connector
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-zalo-connector
+    image: acd-zalo-connector
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -776,15 +805,15 @@ deployments:
     envs:
       secret: {}
       config: 
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CLIENT_ID: ACD-ZALO-CONNECTOR
         KAFKA_CONNECTION_TIMEOUT: 90000
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
         GRPC_URL_CONNECTION: "0.0.0.0:6868"
-        REDIS_IP: 10.106.26.82
+        REDIS_IP: redis-host
         REDIS_PORT: 6379
         REDIS_PASSWORD: Metech123
         GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
@@ -807,7 +836,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-backend
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-backend
+    image: acd-backend
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -830,12 +859,12 @@ deployments:
         NOTIFICATION_SERVER_URL: http://omicx-socket-server-3000-service:3000
         EMAIL_CONNECTOR_URL: omicx-acd-email-connector-8001-service:8000
         DB_TYPE: mongodb
-        DB_HOST: 10.106.26.222
+        DB_HOST: chat-db
         DB_PORT: 27017
         DB_USERNAME: root
         DB_PASSWORD: Metech123
         DB_DATABASE: omicx-channel-manager
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_GROUP_ID: ACD_BACKEND_CHAT
         KAFKA_CONNECTION_TIMEOUT: 30000
@@ -864,7 +893,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-agent-assignment
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-agent-assignment
+    image: acd-agent-assignment
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -878,7 +907,7 @@ deployments:
       config:
         GRPC_URL_CONNECTION: "0.0.0.0:6972"
         GRPC_URL_PACKAGE: "com.metech.acd"
-        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
         GRPC_URL_CONNECTION_ACD_ASM: "omicx-acd-asm-chat-6970-service:6973"
         GRPC_URL_CONNECTION_ACD_ASM_EMAIL: "omicx-acd-asm-email-7990-service:7991"
     volumeMounts: {}
@@ -895,7 +924,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-asm-chat
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-asm-chat
+    image: acd-asm-chat
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -908,7 +937,7 @@ deployments:
       secret: {}
       config:
         DB_TYPE: mssql
-        DB_HOST: 10.106.26.228
+        DB_HOST: crm-db
         DB_PORT: 1433
         DB_USERNAME: crmdbadmin
         DB_PASSWORD: "OmicxCrm2023"
@@ -916,7 +945,7 @@ deployments:
         GRPC_URL_CONNECTION: "0.0.0.0:6973"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM_CHAT
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
@@ -928,7 +957,7 @@ deployments:
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_TRANSACTION_TIMEOUT: "30000"
         TIMEOUT_AGENT_LOGOUT: "300000"
-        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_URL: redis://redis-host:6379
         REDIS_PASSWORD: Metech123
         REDIS_PING_INTERVAL: 10000
     volumeMounts: {}
@@ -945,7 +974,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-facebook-connector
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-facebook-connector
+    image: acd-facebook-connector
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -957,15 +986,15 @@ deployments:
     envs:
       secret: {}
       config:
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CLIENT_ID: ACD-FACEBOOK-CONNECTOR
         KAFKA_CONNECTION_TIMEOUT: 90000
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
         GRPC_URL_CONNECTION: "0.0.0.0:7878"
-        REDIS_IP: 10.106.26.82
+        REDIS_IP: redis-host
         REDIS_PORT: "6379"
         REDIS_PASSWORD: "Metech123"
         SOCIAL_URL: 'https://ps1.omicx.vn/static/socials'
@@ -989,7 +1018,7 @@ deployments:
         cpu: 500m
         memory: 64Mi
   - name: social-configurations
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/social-configurations
+    image: social-configurations
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -1001,12 +1030,12 @@ deployments:
     envs:
       secret: {}
       config:
-        DATABASE_URI: 'mongodb://root:Metech123@10.106.26.222:27017/omicx-channel-manager'
-        REDIS_IP: 10.106.26.82
+        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
+        REDIS_IP: redis-host
         REDIS_PORT: "6379"
         REDIS_PASSWORD: "Metech123"
         KAFKA_ENABLED: true
-        KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
         KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: SOCIAL-CONFIGURATIONS
         KAFKA_CONSUMER_AUTO_COMMIT: false
@@ -1032,7 +1061,7 @@ deployments:
         cpu: 500m
         memory: 64Mi
   - name: chat-statistics
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/chat-statistics
+    image: chat-statistics
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -1061,7 +1090,7 @@ deployments:
         cpu: 250m
         memory: 64Mi
   - name: acd-email-connector
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-email-connector
+    image: acd-email-connector
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -1074,7 +1103,7 @@ deployments:
       secret: {}
       config: 
         KAFKA_ENABLED: true
-        KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
         KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: ACD-EMAIL-CONNECTOR
         KAFKA_CONSUMER_AUTO_COMMIT: false
@@ -1082,7 +1111,7 @@ deployments:
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_AUTH_USER: kafka-admin
         KAFKA_SASL_AUTH_PASSWORD: Metech123
-        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_URL: redis://redis-host:6379
         REDIS_DATABASE: 8
         REDIS_PASSWORD: "Metech123"
         REDIS_PING_INTERVAL: 10000
@@ -1112,7 +1141,7 @@ deployments:
         cpu: 250m
         memory: 256Mi
   - name: acd-asm-email
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/acd-asm-email
+    image: acd-asm-email
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -1125,7 +1154,7 @@ deployments:
       secret: {}
       config: 
         DB_TYPE: mssql
-        DB_HOST: "10.106.26.228"
+        DB_HOST: "crm-db"
         DB_PORT: "1433"
         DB_USERNAME: "crmdbadmin"
         DB_PASSWORD: "OmicxCrm2023"
@@ -1133,7 +1162,7 @@ deployments:
         GRPC_URL_CONNECTION: "0.0.0.0:7991"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
-        KAFKA_BROKER: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM_EMAIL
         KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
@@ -1145,7 +1174,7 @@ deployments:
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_TRANSACTION_TIMEOUT: "30000"
         TIMEOUT_AGENT_LOGOUT: "300000"
-        REDIS_URL: redis://10.106.26.82:6379
+        REDIS_URL: redis://redis-host:6379
         REDIS_PASSWORD: Metech123
         REDIS_PING_INTERVAL: 10000
     volumeMounts: {}
@@ -1162,7 +1191,7 @@ deployments:
         cpu: 125m
         memory: 128Mi
   - name: elastic-sync
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/elastic-sync
+    image: elastic-sync
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -1174,11 +1203,11 @@ deployments:
     envs:
       secret: {}
       config:
-        ELASTICSEARCH_URIS: "http://10.106.26.63:9200"
+        ELASTICSEARCH_URIS: "http://elasticsearch-host:9200"
         ELASTICSEARCH_USERNAME: "elastic"
         ELASTICSEARCH_PASSWORD: "Metech123"
         ELASTICSEARCH_DEFAULT_INDEX: "default_index"
-        KAFKA_BOOTSTRAP_SERVER: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_BOOTSTRAP_SERVER: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
         INSTANCE_ID: "-mkt-elastic-synchronizer-dev"
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
@@ -1198,7 +1227,7 @@ deployments:
         cpu: 128m
         memory: 64Mi
   - name: normalization-service
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/normalization-service
+    image: normalization-service
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
@@ -1217,7 +1246,7 @@ deployments:
         BASE_FOLDER: public/files_upload
         ACCESS_LOG_PATH: '-'
         ERROR_LOG_PATH: '-'
-        KAFKA_BOOTSTRAP_SERVERS: 10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092
+        KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_GROUP_ID: NORMALIZATION_SERVICE
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_USERNAME: kafka-admin
@@ -1241,7 +1270,7 @@ deployments:
         cpu: 500m
         memory: 256Mi
   - name: email-notification
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/email-notification
+    image: email-notification
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
@@ -1262,7 +1291,7 @@ deployments:
         DOMAIN_NAME: https://ps1.omicx.vn 
         SOCIAL_NOTIFICATION_URL: http://omicx-social-configurations-7980-service:7980/api/v1
         KAFKA_ENABLED: true
-        KAFKA_BOOTSTRAP_SERVERS: "10.106.26.167:9092,10.106.26.12:9092,10.106.26.129:9092"
+        KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
         KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: EMAIL-NOTIFICATION
         KAFKA_CONSUMER_AUTO_COMMIT: false
@@ -1281,7 +1310,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: authorization-service
-    image: docker-registry.metechvn.com/release/omicx-1.0.5.15/authorization-service
+    image: authorization-service
     pullPolicy: IfNotPresent
     tag: 'latest'
     replicaCount: 1
