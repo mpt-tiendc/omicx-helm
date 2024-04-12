@@ -18,3 +18,5 @@ To install the omicx-helm chart:
 To uninstall the chart:
 
     helm delete omicx
+
+From Tiendc with love <3
