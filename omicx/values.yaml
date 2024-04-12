@@ -12,32 +12,33 @@ image:
 
 global:
   baseImage: "docker-registry.metechvn.com/release/omicx-1.0.5.15"
-  # envs:
-  #   secret: 
-  #     GLOBAL_SECRET: GLOBAL_SECRET
-  #   config: 
-  #     GLOBAL_ENV: GLOBAL_ENV
-  # hostAliases:
-  # - ip: "10.106.26.167"
-  #   hostnames: "kafka-0"
-  # - ip: "10.106.26.12"
-  #   hostnames: "kafka-1"
-  # - ip: "10.106.26.129"
-  #   hostnames: "kafka-2"
-  # - ip: "10.106.26.228"
-  #   hostnames: "crm-db"
-  # - ip: "10.106.26.100"
-  #   hostnames: "report-db"
-  # - ip: "10.106.26.222"
-  #   hostnames: "chat-db"
-  # - ip: "10.106.26.82"
-  #   hostnames: "redis-host"
-  # - ip: "10.106.26.63"
-  #   hostnames: "elasticsearch-host"
-  # - ip: "10.106.26.24"
-  #   hostnames: "postgresql-host"
-  # - ip: "10.106.26.24"
-  #   hostnames: "omicx-schema-headless"
+  envs:
+    secret: {}
+    config: {}
+  hostAliases:
+  - ip: "168.2.79.9"
+    hostnames: 
+    - "kafka-0"
+    - "kafka-1"
+    - "kafka-2"
+  - ip: "10.10.10.26"
+    hostnames: 
+    - "crm-db"
+  - ip: "168.2.69.21"
+    hostnames: 
+    - "report-db"
+  - ip: "168.2.69.21"
+    hostnames: 
+    - "chat-db"
+  - ip: "168.0.212.98"
+    hostnames: 
+    - "redis-host"
+  - ip: "169.1.30.77"
+    hostnames: 
+    - "elasticsearch-host"
+  - ip: "10.10.10.36"
+    hostnames: 
+    - "postgresql-host"
 
 volumeClaims:
   - name: pvc-omicx-home-data
@@ -124,10 +125,10 @@ deployments:
       config: 
         DB_DATABASE: ProductCatalog
         DB_HOST: crm-db
-        DB_PASSWORD: OmicxCrm2023
+        DB_PASSWORD: 123456aA@
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: crmdbadmin
+        DB_USERNAME: dbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         LOG_DIR: /app/logs/omicx-product-catalog
@@ -161,10 +162,10 @@ deployments:
       config: 
         ADMIN_PASSWORD: F88@Admin#123
         ADMIN_USERNAME: f88
-        DB_DATABASE: fusionpbx
+        DB_DATABASE: postgres
         DB_HOST: postgresql-host
         DB_PASSWORD: Default#Postgres@6699
-        DB_PORT: "5432"
+        DB_PORT: "15432"
         DB_TYPE: postgres
         DB_USERNAME: postgres
         JWT_EXPIRES_IN: 1d
@@ -189,7 +190,7 @@ deployments:
         SLEEP_MS: 1000
         PBX_INSTANCES: 10.106.26.193,8021,ClueCon,103.172.236.143:5080|external&10.106.26.199,8021,ClueCon,103.172.236.27:5080|external
         PORT: "5580"
-        RECORD_URL_PREFIX: https://ps1.omicx.vn/file
+        RECORD_URL_PREFIX: https://crm-dev-v2.metechvn.com/file
         URL_CALL_CENTER: http://10.106.26.193:5590,http://10.106.26.199:5590
         IP_GATEWAY: "8ab65d17-7d16-4971-91b5-60035cd13340"
         ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
@@ -227,10 +228,10 @@ deployments:
       config: 
         DB_DATABASE: OMICXAUTODIALER
         DB_HOST: crm-db
-        DB_PASSWORD: OmicxCrm2023
+        DB_PASSWORD: 123456aA@
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: crmdbadmin
+        DB_USERNAME: dbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
@@ -276,10 +277,10 @@ deployments:
       config: 
         DB_DATABASE: OMICXAUTODIALER
         DB_HOST: crm-db
-        DB_PASSWORD: OmicxCrm2023
+        DB_PASSWORD: 123456aA@
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: crmdbadmin
+        DB_USERNAME: dbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         EXECUTION_REPEAT_INTERVAL: "15000"
@@ -326,10 +327,10 @@ deployments:
       config: 
         DB_DATABASE: OMICXASM
         DB_HOST: crm-db
-        DB_PASSWORD: OmicxCrm2023
+        DB_PASSWORD: 123456aA@
         DB_PORT: "1433"
         DB_TYPE: mssql
-        DB_USERNAME: crmdbadmin
+        DB_USERNAME: dbadmin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
@@ -379,12 +380,7 @@ deployments:
     envs:
       secret: {}
       config: 
-        DB_DATABASE: AutocallAudit
-        DB_HOST: report-db
-        DB_PASSWORD: Metech123
-        DB_PORT: "27017"
-        DB_TYPE: mongodb
-        DB_USERNAME: root
+        DB_URI: mongodb://root:Abcd12345@chat-db:27017/AutocallAudit?authSource=admin
         ENABLE_DOCUMENTATION: "true"
         ENABLE_ORM_LOGS: "true"
         LOG_LEVEL: info
@@ -580,7 +576,7 @@ deployments:
         CS_CONSOLE_ENABLED: "true"
         CS_CRM_ADMIN_BACKEND: http://omicx-web-be-9701-service:9701
         CS_LOG_DIR: /data/logs
-        CS_redis-host: redis-host:6379
+        CS_REDIS_HOST: redis-host:6379
         CS_REDIS_PASSWORD: Metech123
         CS_SOCKET_PATH: /socket-server
         CS_ACD_ASM_URL: http://omicx-acd-asm-chat-6970-service:6970
@@ -718,6 +714,30 @@ deployments:
       requests:
         cpu: 125m
         memory: 16Mi 
+  - name: frontend-v2
+    customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
+    pullPolicy: IfNotPresent
+    tag: 'latest'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 30
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 3000
+    resources: 
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 125m
+        memory: 16Mi 
   - name: omicx-sync-tracker
     image: omicx_sync_tracker
     pullPolicy: Always
@@ -811,7 +831,7 @@ deployments:
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
         GRPC_URL_CONNECTION: "0.0.0.0:6868"
         REDIS_IP: redis-host
         REDIS_PORT: 6379
@@ -858,12 +878,7 @@ deployments:
         FACEBOOK_CONNECTOR_URL: omicx-acd-facebook-connector-7979-service:7878
         NOTIFICATION_SERVER_URL: http://omicx-socket-server-3000-service:3000
         EMAIL_CONNECTOR_URL: omicx-acd-email-connector-8001-service:8000
-        DB_TYPE: mongodb
-        DB_HOST: chat-db
-        DB_PORT: 27017
-        DB_USERNAME: root
-        DB_PASSWORD: Metech123
-        DB_DATABASE: omicx-channel-manager
+        DB_URI: mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_GROUP_ID: ACD_BACKEND_CHAT
@@ -907,7 +922,7 @@ deployments:
       config:
         GRPC_URL_CONNECTION: "0.0.0.0:6972"
         GRPC_URL_PACKAGE: "com.metech.acd"
-        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
         GRPC_URL_CONNECTION_ACD_ASM: "omicx-acd-asm-chat-6970-service:6973"
         GRPC_URL_CONNECTION_ACD_ASM_EMAIL: "omicx-acd-asm-email-7990-service:7991"
     volumeMounts: {}
@@ -939,8 +954,8 @@ deployments:
         DB_TYPE: mssql
         DB_HOST: crm-db
         DB_PORT: 1433
-        DB_USERNAME: crmdbadmin
-        DB_PASSWORD: "OmicxCrm2023"
+        DB_USERNAME: dbadmin
+        DB_PASSWORD: "123456aA@"
         DB_DATABASE: ACD_ASM
         GRPC_URL_CONNECTION: "0.0.0.0:6973"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
@@ -992,12 +1007,12 @@ deployments:
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
         GRPC_URL_CONNECTION: "0.0.0.0:7878"
         REDIS_IP: redis-host
         REDIS_PORT: "6379"
         REDIS_PASSWORD: "Metech123"
-        SOCIAL_URL: 'https://ps1.omicx.vn/static/socials'
+        SOCIAL_URL: 'https://crm-dev-v2.metechvn.com/static/socials'
         GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
     volumeMounts:
       - mountPath: /public
@@ -1030,7 +1045,7 @@ deployments:
     envs:
       secret: {}
       config:
-        DATABASE_URI: 'mongodb://root:Metech123@chat-db:27017/omicx-channel-manager'
+        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
         REDIS_IP: redis-host
         REDIS_PORT: "6379"
         REDIS_PASSWORD: "Metech123"
@@ -1046,7 +1061,7 @@ deployments:
         EMAIL_FETCH_STATUS_TOPIC: ACD.Email.FetchStatus
         GCLOUD_CLIENT_SECRET: "U2FsdGVkX1+0nd7NokbkobnxbfK0IyDkIfCzeWpCWxQtn8djQpauhPl01aQOes9+5IenGh1rrdJqA179tW2Y7A=="
         AZURE_CLIENT_SECRET: "U2FsdGVkX18/cZVE0GCt1CxwkOjaB9S3JfSJSC3fre4qjqshENuKOIpogI73qsmfzLra8fKP6DzA2AJuLkfZYA=="
-        OAUTH2_REDIRECT_URL: https://ps1.omicx.vn/api/v1/email/oauth2
+        OAUTH2_REDIRECT_URL: https://crm-dev-v2.metechvn.com/api/v1/email/oauth2
     volumeMounts: {}
     volumes: {}
     service:
@@ -1156,8 +1171,8 @@ deployments:
         DB_TYPE: mssql
         DB_HOST: "crm-db"
         DB_PORT: "1433"
-        DB_USERNAME: "crmdbadmin"
-        DB_PASSWORD: "OmicxCrm2023"
+        DB_USERNAME: "dbadmin"
+        DB_PASSWORD: "123456aA@"
         DB_DATABASE: "ACD_ASM_EMAIL"
         GRPC_URL_CONNECTION: "0.0.0.0:7991"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
@@ -1288,7 +1303,7 @@ deployments:
         TENANT_CHANGED_STATUS_TOPIC: Omicx.TenantChangedStatus
         TENANT_RESET_PASSWORD: CRM.ResetAdminPassword
         EMAIL_SENDING_TOPIC: ACD.Email.Sending
-        DOMAIN_NAME: https://ps1.omicx.vn 
+        DOMAIN_NAME: https://crm-dev-v2.metechvn.com 
         SOCIAL_NOTIFICATION_URL: http://omicx-social-configurations-7980-service:7980/api/v1
         KAFKA_ENABLED: true
         KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
