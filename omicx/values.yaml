@@ -190,7 +190,7 @@ deployments:
         SLEEP_MS: 1000
         PBX_INSTANCES: 10.106.26.193,8021,ClueCon,103.172.236.143:5080|external&10.106.26.199,8021,ClueCon,103.172.236.27:5080|external
         PORT: "5580"
-        RECORD_URL_PREFIX: https://crm-dev-v2.metechvn.com/file
+        RECORD_URL_PREFIX: https://crm-dev-v1.metechvn.com/file
         URL_CALL_CENTER: http://10.106.26.193:5590,http://10.106.26.199:5590
         IP_GATEWAY: "8ab65d17-7d16-4971-91b5-60035cd13340"
         ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
@@ -1012,7 +1012,7 @@ deployments:
         REDIS_IP: redis-host
         REDIS_PORT: "6379"
         REDIS_PASSWORD: "Metech123"
-        SOCIAL_URL: 'https://crm-dev-v2.metechvn.com/static/socials'
+        SOCIAL_URL: 'https://crm-dev-v1.metechvn.com/static/socials'
         GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
     volumeMounts:
       - mountPath: /public
@@ -1061,7 +1061,7 @@ deployments:
         EMAIL_FETCH_STATUS_TOPIC: ACD.Email.FetchStatus
         GCLOUD_CLIENT_SECRET: "U2FsdGVkX1+0nd7NokbkobnxbfK0IyDkIfCzeWpCWxQtn8djQpauhPl01aQOes9+5IenGh1rrdJqA179tW2Y7A=="
         AZURE_CLIENT_SECRET: "U2FsdGVkX18/cZVE0GCt1CxwkOjaB9S3JfSJSC3fre4qjqshENuKOIpogI73qsmfzLra8fKP6DzA2AJuLkfZYA=="
-        OAUTH2_REDIRECT_URL: https://crm-dev-v2.metechvn.com/api/v1/email/oauth2
+        OAUTH2_REDIRECT_URL: https://crm-dev-v1.metechvn.com/api/v1/email/oauth2
     volumeMounts: {}
     volumes: {}
     service:
@@ -1303,7 +1303,7 @@ deployments:
         TENANT_CHANGED_STATUS_TOPIC: Omicx.TenantChangedStatus
         TENANT_RESET_PASSWORD: CRM.ResetAdminPassword
         EMAIL_SENDING_TOPIC: ACD.Email.Sending
-        DOMAIN_NAME: https://crm-dev-v2.metechvn.com 
+        DOMAIN_NAME: https://crm-dev-v1.metechvn.com 
         SOCIAL_NOTIFICATION_URL: http://omicx-social-configurations-7980-service:7980/api/v1
         KAFKA_ENABLED: true
         KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
