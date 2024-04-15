@@ -188,7 +188,7 @@ deployments:
         PBX_HEARTBEAT_INTERVAL: "60000"
         CPS: 20
         SLEEP_MS: 1000
-        PBX_INSTANCES: 10.10.10.31,8021,ClueCon,103.103.141.141.55:5080|external
+        PBX_INSTANCES: 10.10.10.31,8021,ClueCon,103.141.141.55:5080|external
         PORT: "5580"
         RECORD_URL_PREFIX: https://crm-dev-v1.metechvn.com/file
         URL_CALL_CENTER: http://10.10.10.31:5590
