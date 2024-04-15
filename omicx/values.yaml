@@ -162,7 +162,7 @@ deployments:
       config: 
         ADMIN_PASSWORD: F88@Admin#123
         ADMIN_USERNAME: f88
-        DB_DATABASE: postgres
+        DB_DATABASE: dev_pbx
         DB_HOST: postgresql-host
         DB_PASSWORD: Default#Postgres@6699
         DB_PORT: "15432"
@@ -188,10 +188,10 @@ deployments:
         PBX_HEARTBEAT_INTERVAL: "60000"
         CPS: 20
         SLEEP_MS: 1000
-        PBX_INSTANCES: 10.106.26.193,8021,ClueCon,103.172.236.143:5080|external&10.106.26.199,8021,ClueCon,103.172.236.27:5080|external
+        PBX_INSTANCES: 10.10.10.31,8021,ClueCon,103.103.141.141.55:5080|external
         PORT: "5580"
         RECORD_URL_PREFIX: https://crm-dev-v1.metechvn.com/file
-        URL_CALL_CENTER: http://10.106.26.193:5590,http://10.106.26.199:5590
+        URL_CALL_CENTER: http://10.10.10.31:5590
         IP_GATEWAY: "8ab65d17-7d16-4971-91b5-60035cd13340"
         ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
         ASM_VOICE_GRPC_URL: omicx-asm-3003-service:3476
