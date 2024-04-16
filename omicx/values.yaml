@@ -1343,10 +1343,7 @@ deployments:
         subPath: log4net.config
       - mountPath: /app/wwwroot
         name: homedata
-    volumes: 
-      - name: homedata
-        persistentVolumeClaim:
-          claimName: pvc-omicx-home-data
+    volumes: {}
     env: {}
     envs:
       secret: {}
