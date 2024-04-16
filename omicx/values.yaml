@@ -1341,8 +1341,6 @@ deployments:
       - mountPath: /app/log4net.config
         name: config
         subPath: log4net.config
-      - mountPath: /app/wwwroot
-        name: homedata
     volumes: {}
     env: {}
     envs:
