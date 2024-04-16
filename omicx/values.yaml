@@ -687,7 +687,7 @@ deployments:
         cpu: "1"
         memory: 64Mi
   - name: web-fe
-    customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
+    customImage: docker-registry.metechvn.com/dev/omicx-v1/frontend
     pullPolicy: IfNotPresent
     tag: 'a92eb68a'
     replicaCount: 1
