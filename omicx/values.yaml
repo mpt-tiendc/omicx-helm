@@ -688,8 +688,8 @@ deployments:
         memory: 64Mi
   - name: web-fe
     customImage: docker-registry.metechvn.com/dev/omicx-v1/frontend
-    pullPolicy: IfNotPresent
-    tag: 'a92eb68a'
+    pullPolicy: Always
+    tag: 'latest'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
