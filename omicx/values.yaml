@@ -879,7 +879,7 @@ deployments:
         NOTIFICATION_SERVER_URL: http://omicx-socket-server-3000-service:3000
         EMAIL_CONNECTOR_URL: omicx-acd-email-connector-8001-service:8000
         DB_URI: mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin
-        KAFKA_BROKER: kafka-0:9092
+        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_GROUP_ID: ACD_BACKEND_CHAT
         KAFKA_CONNECTION_TIMEOUT: 30000
@@ -1001,7 +1001,7 @@ deployments:
     envs:
       secret: {}
       config:
-        KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
+        KAFKA_BROKER: kafka-0:9092
         KAFKA_CLIENT_ID: ACD-FACEBOOK-CONNECTOR
         KAFKA_CONNECTION_TIMEOUT: 90000
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
