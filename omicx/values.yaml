@@ -856,7 +856,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-backend
-    image: acd-backend
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
     tag: 'latest'
     replicaCount: 1
