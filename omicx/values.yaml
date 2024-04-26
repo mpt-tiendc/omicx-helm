@@ -1224,6 +1224,7 @@ deployments:
         ELASTICSEARCH_DEFAULT_INDEX: 'default_index'
         KAFKA_BOOTSTRAP_SERVER: 'kafka-0:9092'
         INSTANCE_ID: '-elastic-synchronizer-dev'
+        KAFKA_SECURITY_LOGIN_MODULE: org.apache.kafka.common.security.scram.ScramLoginModule
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
         KAFKA_SECURITY_USERNAME: kafka-admin
