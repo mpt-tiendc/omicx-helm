@@ -1222,8 +1222,8 @@ deployments:
         ELASTICSEARCH_USERNAME: 'elastic'
         ELASTICSEARCH_PASSWORD: 'Metech123'
         ELASTICSEARCH_DEFAULT_INDEX: 'default_index'
-        KAFKA_BOOTSTRAP_SERVER: 'kafka-0:9092,kafka-1:9092,kafka-2:9092'
-        INSTANCE_ID: '-mkt-elastic-synchronizer-dev'
+        KAFKA_BOOTSTRAP_SERVER: 'kafka-0:9092'
+        INSTANCE_ID: '-elastic-synchronizer-dev'
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
         KAFKA_SECURITY_USERNAME: kafka-admin
