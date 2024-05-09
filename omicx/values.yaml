@@ -992,7 +992,7 @@ deployments:
   - name: call-connector
     customImage: docker-registry.metechvn.com/dev/omicx/call-connector
     pullPolicy: Always
-    tag: '7a60ce06'
+    tag: '8a42935e'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
