@@ -8,37 +8,37 @@ image:
   repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ''
+  tag: ""
 
 global:
-  baseImage: 'docker-registry.metechvn.com/release/omicx-1.0.5.15'
+  baseImage: "docker-registry.metechvn.com/release/omicx-1.0.5.15"
   envs:
     secret: {}
     config: {}
   hostAliases:
-    - ip: '168.2.79.9'
+    - ip: "168.2.79.9"
       hostnames:
-        - 'kafka-0'
-        - 'kafka-1'
-        - 'kafka-2'
-    - ip: '10.10.10.26'
+        - "kafka-0"
+        - "kafka-1"
+        - "kafka-2"
+    - ip: "10.10.10.26"
       hostnames:
-        - 'crm-db'
-    - ip: '168.2.69.21'
+        - "crm-db"
+    - ip: "168.2.69.21"
       hostnames:
-        - 'report-db'
-    - ip: '168.2.69.21'
+        - "report-db"
+    - ip: "168.2.69.21"
       hostnames:
-        - 'chat-db'
-    - ip: '168.0.212.98'
+        - "chat-db"
+    - ip: "168.0.212.98"
       hostnames:
-        - 'redis-host'
-    - ip: '169.1.30.77'
+        - "redis-host"
+    - ip: "169.1.30.77"
       hostnames:
-        - 'elasticsearch-host'
-    - ip: '10.10.10.36'
+        - "elasticsearch-host"
+    - ip: "10.10.10.36"
       hostnames:
-        - 'postgresql-host'
+        - "postgresql-host"
 
 volumeClaims:
   - name: pvc-omicx-home-data
@@ -67,27 +67,27 @@ volumeClaims:
     storageClassName: nfs-provision
 
 imagePullSecrets: []
-nameOverride: ''
-fullnameOverride: ''
+nameOverride: ""
+fullnameOverride: ""
 
 deployments:
   - name: nginx
     customImage: docker-registry.metechvn.com/nginx-lua
     pullPolicy: IfNotPresent
-    tag: '1.1-alpine'
+    tag: "1.1-alpine"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/nginx/*'
-        mountPath: '/etc/nginx/conf.d'
+      - name: "config"
+        folder: "resources/nginx/*"
+        mountPath: "/etc/nginx/conf.d"
         subPath: {}
-      - name: 'config1'
-        folder: 'resources/nginx-conf/*'
-        mountPath: '/usr/src/app/nginx.conf'
-        subPath: 'nginx.conf'
+      - name: "config1"
+        folder: "resources/nginx-conf/*"
+        mountPath: "/usr/src/app/nginx.conf"
+        subPath: "nginx.conf"
     env: {}
     envs:
       secret: {}
@@ -113,11 +113,11 @@ deployments:
   - name: product-catalog
     image: product_catalog
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /api
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -126,15 +126,15 @@ deployments:
         DB_DATABASE: ProductCatalog
         DB_HOST: crm-db
         DB_PASSWORD: 123456aA@
-        DB_PORT: '1433'
+        DB_PORT: "1433"
         DB_TYPE: mssql
         DB_USERNAME: dbadmin
-        ENABLE_DOCUMENTATION: 'true'
-        ENABLE_ORM_LOGS: 'true'
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
         LOG_DIR: /app/logs/omicx-product-catalog
         LOG_LEVEL: info
         NODE_ENV: development
-        PORT: '3005'
+        PORT: "3005"
     volumeMounts: {}
     volumes: {}
     service:
@@ -150,11 +150,11 @@ deployments:
   - name: cci
     image: pbx-integration
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -165,35 +165,35 @@ deployments:
         DB_DATABASE: dev_pbx
         DB_HOST: postgresql-host
         DB_PASSWORD: Default#Postgres@6699
-        DB_PORT: '15432'
+        DB_PORT: "15432"
         DB_TYPE: postgres
         DB_USERNAME: postgres
         JWT_EXPIRES_IN: 1d
         JWT_SECRET: metech@123
-        KAFKA_AUTHENTICATION_TIMEOUT: '1000'
+        KAFKA_AUTHENTICATION_TIMEOUT: "1000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_CLIENT_ID: CCI
-        KAFKA_CONNECTION_TIMEOUT: '3000'
+        KAFKA_CONNECTION_TIMEOUT: "3000"
         KAFKA_GROUP_ID: CCI
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
         LOG_DIR: /app/logs/omicx-cci
         LOG_LEVEL: info
         NODE_ENV: production
-        PBX_HEARTBEAT_INTERVAL: '60000'
+        PBX_HEARTBEAT_INTERVAL: "60000"
         CPS: 20
         SLEEP_MS: 1000
         PBX_INSTANCES: 10.10.10.31,8021,ClueCon,103.141.141.55:5080|external
-        PORT: '5580'
+        PORT: "5580"
         RECORD_URL_PREFIX: https://crm-dev-v1.metechvn.com/file
         URL_CALL_CENTER: http://10.10.10.31:5590
-        IP_GATEWAY: '8ab65d17-7d16-4971-91b5-60035cd13340'
-        ENCRYPT_SENSITIVE_KEY: '01234567896868686868012345678968'
+        IP_GATEWAY: "8ab65d17-7d16-4971-91b5-60035cd13340"
+        ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
         ASM_VOICE_GRPC_URL: omicx-asm-3003-service:3476
     volumeMounts:
       - mountPath: /public
@@ -216,11 +216,11 @@ deployments:
   - name: campaign-planning
     image: campaign_planning
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -229,27 +229,27 @@ deployments:
         DB_DATABASE: OMICXAUTODIALER
         DB_HOST: crm-db
         DB_PASSWORD: 123456aA@
-        DB_PORT: '1433'
+        DB_PORT: "1433"
         DB_TYPE: mssql
         DB_USERNAME: dbadmin
-        ENABLE_DOCUMENTATION: 'true'
-        ENABLE_ORM_LOGS: 'true'
-        KAFKA_AUTHENTICATION_TIMEOUT: '10000'
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_GROUP_ID: PLANNING
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
-        KAFKA_RESPONSE_TIMEOUT: '30000'
+        KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
         LOG_DIR: /app/logs/omicx-campaign-planning
         LOG_LEVEL: info
         NODE_ENV: production
-        PORT: '3000'
-        SCAN_HEARTBEAT_INTERVAL: '60000'
+        PORT: "3000"
+        SCAN_HEARTBEAT_INTERVAL: "60000"
     volumeMounts: {}
     volumes: {}
     service:
@@ -265,11 +265,11 @@ deployments:
   - name: campaign-execution
     image: campaign_execution
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -278,28 +278,28 @@ deployments:
         DB_DATABASE: OMICXAUTODIALER
         DB_HOST: crm-db
         DB_PASSWORD: 123456aA@
-        DB_PORT: '1433'
+        DB_PORT: "1433"
         DB_TYPE: mssql
         DB_USERNAME: dbadmin
-        ENABLE_DOCUMENTATION: 'true'
-        ENABLE_ORM_LOGS: 'true'
-        EXECUTION_REPEAT_INTERVAL: '15000'
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        EXECUTION_REPEAT_INTERVAL: "15000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
-        KAFKA_CONNECTION_TIMEOUT: '30000'
+        KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: EXECUTION
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
-        KAFKA_RESPONSE_TIMEOUT: '30000'
+        KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
         LOG_DIR: /app/logs/omicx-campaign-execution
         LOG_LEVEL: info
         NODE_ENV: production
-        PORT: '3001'
-        CCI_URL: 'http://omicx-cci-5580-service:5580'
+        PORT: "3001"
+        CCI_URL: "http://omicx-cci-5580-service:5580"
     volumeMounts: {}
     volumes: {}
     service:
@@ -315,11 +315,11 @@ deployments:
   - name: asm
     image: omicx_asm
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /api/v1
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -328,28 +328,28 @@ deployments:
         DB_DATABASE: OMICXASM
         DB_HOST: crm-db
         DB_PASSWORD: 123456aA@
-        DB_PORT: '1433'
+        DB_PORT: "1433"
         DB_TYPE: mssql
         DB_USERNAME: dbadmin
-        ENABLE_DOCUMENTATION: 'true'
-        ENABLE_ORM_LOGS: 'true'
-        KAFKA_AUTHENTICATION_TIMEOUT: '10000'
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
-        KAFKA_CONNECTION_TIMEOUT: '30000'
+        KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
-        KAFKA_RESPONSE_TIMEOUT: '30000'
+        KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
         LOG_DIR: /app/logs/omicx-asm
         LOG_LEVEL: info
         NODE_ENV: production
-        TIMEOUT_AGENT_LOGOUT: '300000'
-        PORT: '3003'
+        TIMEOUT_AGENT_LOGOUT: "300000"
+        PORT: "3003"
         CCI_GRPC_URL: omicx-cci-5580-service:3475
         REDIS_URL: redis://redis-host:6379
         REDIS_PASSWORD: Metech123
@@ -370,34 +370,34 @@ deployments:
   - name: campaign-audit
     image: campaign_audit
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
         DB_URI: mongodb://root:Abcd12345@chat-db:27017/AutocallAudit?authSource=admin
-        ENABLE_DOCUMENTATION: 'true'
-        ENABLE_ORM_LOGS: 'true'
+        ENABLE_DOCUMENTATION: "true"
+        ENABLE_ORM_LOGS: "true"
         LOG_LEVEL: info
-        KAFKA_AUTHENTICATION_TIMEOUT: '10000'
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
-        KAFKA_CONNECTION_TIMEOUT: '30000'
+        KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: AUDIT
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
-        KAFKA_RESPONSE_TIMEOUT: '30000'
+        KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
         NODE_ENV: production
-        PORT: '3002'
+        PORT: "3002"
     volumeMounts: {}
     volumes: {}
     service:
@@ -413,11 +413,11 @@ deployments:
   - name: channel-gateway
     image: channel-gateway
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -457,16 +457,16 @@ deployments:
   - name: domain-registry
     image: domain_registry
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/domain-registry/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/domain-registry/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -491,16 +491,16 @@ deployments:
   - name: job-common
     image: job_common
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/job-common/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/job-common/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -520,7 +520,7 @@ deployments:
       port: 9703
     resources:
       limits:
-        cpu: '2'
+        cpu: "2"
         memory: 2Gi
       requests:
         cpu: 125m
@@ -528,16 +528,16 @@ deployments:
   - name: autocall-report
     image: autocall-report
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/autocall-report/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/autocall-report/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -554,7 +554,7 @@ deployments:
       port: 80
     resources:
       limits:
-        cpu: '3'
+        cpu: "3"
         memory: 6Gi
       requests:
         cpu: 256m
@@ -563,17 +563,17 @@ deployments:
   - name: socket-server
     image: socket_server
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
-        CS_CONSOLE_ENABLED: 'true'
+        CS_CONSOLE_ENABLED: "true"
         CS_CRM_ADMIN_BACKEND: http://omicx-web-be-9701-service:9701
         CS_LOG_DIR: /data/logs
         CS_REDIS_HOST: redis-host:6379
@@ -584,16 +584,16 @@ deployments:
         CUSTOMER_SOCKET_KEY: Livechat@Metech
         KAFKA_GROUP_ID: OMICX-SOCKET
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
-        KAFKA_LOG_LEVEL: '4'
+        KAFKA_LOG_LEVEL: "4"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
         SECRET_KEY: Admin_C421AAEE0D114E9C
-        ENCRYPT_SENSITIVE_KEY: '01234567896868686868012345678968'
-        CS_PING_INTERVAL: '15000'
-        CS_PING_TIMEOUT: '60000'
-        LOG_LEVEL: 'info'
+        ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
+        CS_PING_INTERVAL: "15000"
+        CS_PING_TIMEOUT: "60000"
+        LOG_LEVEL: "info"
     volumeMounts: {}
     volumes: {}
     service:
@@ -609,16 +609,16 @@ deployments:
   - name: tenant-registration
     image: tenant_registration
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/tenant-registration/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/tenant-registration/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -646,16 +646,16 @@ deployments:
   - name: web-be
     image: backend
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/web-be/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/web-be/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -681,24 +681,24 @@ deployments:
       port: 9701
     resources:
       limits:
-        cpu: '2'
+        cpu: "2"
         memory: 4Gi
       requests:
-        cpu: '1'
+        cpu: "1"
         memory: 64Mi
   - name: web-fe
     customImage: docker-registry.metechvn.com/dev/omicx-v1/frontend
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/web-fe/*'
-        mountPath: '/etc/nginx/conf.d/nginx.conf'
-        subPath: 'nginx.conf'
+      - name: "config"
+        folder: "resources/web-fe/*"
+        mountPath: "/etc/nginx/conf.d/nginx.conf"
+        subPath: "nginx.conf"
     env: {}
     envs:
       secret: {}
@@ -709,7 +709,7 @@ deployments:
       port: 80
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 256Mi
       requests:
         cpu: 125m
@@ -717,11 +717,11 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: '46a1a175'
+    tag: "46a1a175"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -733,7 +733,7 @@ deployments:
       port: 3000
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 512Mi
       requests:
         cpu: 125m
@@ -741,16 +741,16 @@ deployments:
   - name: omicx-sync-tracker
     image: omicx_sync_tracker
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/sync-tracker/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/sync-tracker/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -770,7 +770,7 @@ deployments:
       port: 9788
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 512Mi
       requests:
         cpu: 125m
@@ -778,16 +778,16 @@ deployments:
   - name: omicx-sync-worker
     image: omicx_sync_worker
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/sync-worker/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/sync-worker/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -807,7 +807,7 @@ deployments:
       port: 9766
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 1024Mi
       requests:
         cpu: 125m
@@ -815,11 +815,11 @@ deployments:
   - name: acd-zalo-connector
     image: acd-zalo-connector
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -831,12 +831,12 @@ deployments:
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
-        GRPC_URL_CONNECTION: '0.0.0.0:6868'
+        DATABASE_URI: "mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin"
+        GRPC_URL_CONNECTION: "0.0.0.0:6868"
         REDIS_IP: redis-host
         REDIS_PORT: 6379
         REDIS_PASSWORD: Metech123
-        GRPC_URL_SOCIAL_CONFIGURATION: 'omicx-social-configurations-7980-service:7989'
+        GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
     volumeMounts:
       - mountPath: /public
         name: homedata
@@ -858,11 +858,11 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: '540f15df'
+    tag: "540f15df"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -894,6 +894,7 @@ deployments:
         VIBER_CONNECTOR_URL: omicx-acd-viber-connector-7996-service:7997
         TELEGRAM_CONNECTOR_URL: omicx-acd-telegram-connector-7992-service:7993
         WS_CONNECTOR_URL: omicx-acd-whatsapp-connector-7994-service:7995
+        ABLY_TOKEN: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
     volumeMounts: {}
     volumes: {}
     service:
@@ -910,21 +911,21 @@ deployments:
   - name: acd-agent-assignment
     image: acd-agent-assignment
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
-        GRPC_URL_CONNECTION: '0.0.0.0:6972'
-        GRPC_URL_PACKAGE: 'com.metech.acd'
-        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
-        GRPC_URL_CONNECTION_ACD_ASM: 'omicx-acd-asm-chat-6970-service:6973'
-        GRPC_URL_CONNECTION_ACD_ASM_EMAIL: 'omicx-acd-asm-email-7990-service:7991'
+        GRPC_URL_CONNECTION: "0.0.0.0:6972"
+        GRPC_URL_PACKAGE: "com.metech.acd"
+        DATABASE_URI: "mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin"
+        GRPC_URL_CONNECTION_ACD_ASM: "omicx-acd-asm-chat-6970-service:6973"
+        GRPC_URL_CONNECTION_ACD_ASM_EMAIL: "omicx-acd-asm-email-7990-service:7991"
     volumeMounts: {}
     volumes: {}
     service:
@@ -941,11 +942,11 @@ deployments:
   - name: acd-asm-chat
     image: acd-asm-chat
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -955,23 +956,23 @@ deployments:
         DB_HOST: crm-db
         DB_PORT: 1433
         DB_USERNAME: dbadmin
-        DB_PASSWORD: '123456aA@'
+        DB_PASSWORD: "123456aA@"
         DB_DATABASE: ACD_ASM
-        GRPC_URL_CONNECTION: '0.0.0.0:6973'
-        GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: 'omicx-social-configurations-7980-service:7989'
-        KAFKA_AUTHENTICATION_TIMEOUT: '10000'
+        GRPC_URL_CONNECTION: "0.0.0.0:6973"
+        GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
-        KAFKA_CONNECTION_TIMEOUT: '30000'
+        KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM_CHAT
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
-        KAFKA_RESPONSE_TIMEOUT: '30000'
+        KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
-        TIMEOUT_AGENT_LOGOUT: '300000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        TIMEOUT_AGENT_LOGOUT: "300000"
         REDIS_URL: redis://redis-host:6379
         REDIS_PASSWORD: Metech123
         REDIS_PING_INTERVAL: 10000
@@ -988,14 +989,43 @@ deployments:
       requests:
         cpu: 125m
         memory: 64Mi
-  - name: acd-facebook-connector
-    image: acd-facebook-connector
+  - name: call-connector
+    customImage: docker-registry.metechvn.com/dev/omicx/call-connector
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        KAFKA_BROKERS: kafka-0:9092
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_MECHANISM: sha512
+        KAFKA_CALL_CONNECTOR_TOPIC: ACD.Call.Received
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 64Mi
+
+  - name: acd-facebook-connector
+    image: acd-facebook-connector
+    pullPolicy: Always
+    tag: "latest"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
@@ -1007,13 +1037,13 @@ deployments:
         KAFKA_AUTHENTICATION_TIMEOUT: 60000
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
-        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
-        GRPC_URL_CONNECTION: '0.0.0.0:7878'
+        DATABASE_URI: "mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin"
+        GRPC_URL_CONNECTION: "0.0.0.0:7878"
         REDIS_IP: redis-host
-        REDIS_PORT: '6379'
-        REDIS_PASSWORD: 'Metech123'
-        SOCIAL_URL: 'https://crm-dev-v1.metechvn.com/static/socials'
-        GRPC_URL_SOCIAL_CONFIGURATION: 'omicx-social-configurations-7980-service:7989'
+        REDIS_PORT: "6379"
+        REDIS_PASSWORD: "Metech123"
+        SOCIAL_URL: "https://crm-dev-v1.metechvn.com/static/socials"
+        GRPC_URL_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
     volumeMounts:
       - mountPath: /public
         name: homedata
@@ -1035,23 +1065,23 @@ deployments:
   - name: social-configurations
     image: social-configurations
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
-        DATABASE_URI: 'mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin'
+        DATABASE_URI: "mongodb://root:Abcd12345@chat-db:27017/omicx-channel-manager?authSource=admin"
         REDIS_IP: redis-host
-        REDIS_PORT: '6379'
-        REDIS_PASSWORD: 'Metech123'
+        REDIS_PORT: "6379"
+        REDIS_PASSWORD: "Metech123"
         KAFKA_ENABLED: true
-        KAFKA_BOOTSTRAP_SERVERS: 'kafka-0:9092,kafka-1:9092,kafka-2:9092'
-        KAFKA_SCHEMA_REGISTRY_URL: 'http://omicx-schema-headless:8081'
+        KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: SOCIAL-CONFIGURATIONS
         KAFKA_CONSUMER_AUTO_COMMIT: false
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -1059,8 +1089,8 @@ deployments:
         KAFKA_SASL_AUTH_USER: kafka-admin
         KAFKA_SASL_AUTH_PASSWORD: Metech123
         EMAIL_FETCH_STATUS_TOPIC: ACD.Email.FetchStatus
-        GCLOUD_CLIENT_SECRET: 'U2FsdGVkX1+0nd7NokbkobnxbfK0IyDkIfCzeWpCWxQtn8djQpauhPl01aQOes9+5IenGh1rrdJqA179tW2Y7A=='
-        AZURE_CLIENT_SECRET: 'U2FsdGVkX18/cZVE0GCt1CxwkOjaB9S3JfSJSC3fre4qjqshENuKOIpogI73qsmfzLra8fKP6DzA2AJuLkfZYA=='
+        GCLOUD_CLIENT_SECRET: "U2FsdGVkX1+0nd7NokbkobnxbfK0IyDkIfCzeWpCWxQtn8djQpauhPl01aQOes9+5IenGh1rrdJqA179tW2Y7A=="
+        AZURE_CLIENT_SECRET: "U2FsdGVkX18/cZVE0GCt1CxwkOjaB9S3JfSJSC3fre4qjqshENuKOIpogI73qsmfzLra8fKP6DzA2AJuLkfZYA=="
         OAUTH2_REDIRECT_URL: https://crm-dev-v1.metechvn.com/api/v1/email/oauth2
     volumeMounts: {}
     volumes: {}
@@ -1078,16 +1108,16 @@ deployments:
   - name: chat-statistics
     image: chat-statistics
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/chat-statistics/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/chat-statistics/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     env: {}
     envs:
       secret: {}
@@ -1099,7 +1129,7 @@ deployments:
       port: 80
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 512Mi
       requests:
         cpu: 250m
@@ -1107,19 +1137,19 @@ deployments:
   - name: acd-email-connector
     image: acd-email-connector
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
         KAFKA_ENABLED: true
-        KAFKA_BOOTSTRAP_SERVERS: 'kafka-0:9092,kafka-1:9092,kafka-2:9092'
-        KAFKA_SCHEMA_REGISTRY_URL: 'http://omicx-schema-headless:8081'
+        KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: ACD-EMAIL-CONNECTOR
         KAFKA_CONSUMER_AUTO_COMMIT: false
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -1128,15 +1158,15 @@ deployments:
         KAFKA_SASL_AUTH_PASSWORD: Metech123
         REDIS_URL: redis://redis-host:6379
         REDIS_DATABASE: 8
-        REDIS_PASSWORD: 'Metech123'
+        REDIS_PASSWORD: "Metech123"
         REDIS_PING_INTERVAL: 10000
         LOG_LEVEL: info
-        EMAIL_FETCH_CRON: '0 * * * * *'
+        EMAIL_FETCH_CRON: "0 * * * * *"
         EMAIL_MESSAGE_TOPIC: ACD.Email.NewEmail
         EMAIL_REFRESH_TOKEN_TOPIC: Config.Email.RefreshToken
         SERVER_PORT: 8000
         SOCIAL_CONFIG_RPC_URL: omicx-social-configurations-7980-service:7989
-        EMAIL_ATTACHMENT_ROOT_DIR: '/opt/data'
+        EMAIL_ATTACHMENT_ROOT_DIR: "/opt/data"
     volumeMounts:
       - mountPath: /opt/data
         name: homedata
@@ -1158,37 +1188,37 @@ deployments:
   - name: acd-asm-email
     image: acd-asm-email
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
         DB_TYPE: mssql
-        DB_HOST: 'crm-db'
-        DB_PORT: '1433'
-        DB_USERNAME: 'dbadmin'
-        DB_PASSWORD: '123456aA@'
-        DB_DATABASE: 'ACD_ASM_EMAIL'
-        GRPC_URL_CONNECTION: '0.0.0.0:7991'
-        GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: 'omicx-social-configurations-7980-service:7989'
-        KAFKA_AUTHENTICATION_TIMEOUT: '10000'
+        DB_HOST: "crm-db"
+        DB_PORT: "1433"
+        DB_USERNAME: "dbadmin"
+        DB_PASSWORD: "123456aA@"
+        DB_DATABASE: "ACD_ASM_EMAIL"
+        GRPC_URL_CONNECTION: "0.0.0.0:7991"
+        GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
+        KAFKA_AUTHENTICATION_TIMEOUT: "10000"
         KAFKA_BROKER: kafka-0:9092,kafka-1:9092,kafka-2:9092
-        KAFKA_CONNECTION_TIMEOUT: '30000'
+        KAFKA_CONNECTION_TIMEOUT: "30000"
         KAFKA_GROUP_ID: ASM_EMAIL
-        KAFKA_REAUTHENTICATION_THRESHOLD: '10000'
+        KAFKA_REAUTHENTICATION_THRESHOLD: "10000"
         KAFKA_REGISTRY: http://omicx-schema-headless:8081/
-        KAFKA_RESPONSE_TIMEOUT: '30000'
+        KAFKA_RESPONSE_TIMEOUT: "30000"
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
         KAFKA_SASL_PASSWORD: Metech123
-        KAFKA_SASL_PLAINTEXT_ENABLED: 'true'
+        KAFKA_SASL_PLAINTEXT_ENABLED: "true"
         KAFKA_SASL_USERNAME: kafka-admin
-        KAFKA_TRANSACTION_TIMEOUT: '30000'
-        TIMEOUT_AGENT_LOGOUT: '300000'
+        KAFKA_TRANSACTION_TIMEOUT: "30000"
+        TIMEOUT_AGENT_LOGOUT: "300000"
         REDIS_URL: redis://redis-host:6379
         REDIS_PASSWORD: Metech123
         REDIS_PING_INTERVAL: 10000
@@ -1208,28 +1238,28 @@ deployments:
   - name: elastic-sync
     image: elastic-sync
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile: {}
     env: {}
     envs:
       secret: {}
       config:
-        ELASTICSEARCH_URIS: 'http://elasticsearch-host:9200'
-        ELASTICSEARCH_USERNAME: 'elastic'
-        ELASTICSEARCH_PASSWORD: 'Metech123'
-        ELASTICSEARCH_DEFAULT_INDEX: 'default_index'
-        KAFKA_BOOTSTRAP_SERVER: 'kafka-0:9092'
-        INSTANCE_ID: '-elastic-synchronizer-dev'
+        ELASTICSEARCH_URIS: "http://elasticsearch-host:9200"
+        ELASTICSEARCH_USERNAME: "elastic"
+        ELASTICSEARCH_PASSWORD: "Metech123"
+        ELASTICSEARCH_DEFAULT_INDEX: "default_index"
+        KAFKA_BOOTSTRAP_SERVER: "kafka-0:9092"
+        INSTANCE_ID: "-elastic-synchronizer-dev"
         KAFKA_SECURITY_LOGIN_MODULE: org.apache.kafka.common.security.scram.ScramLoginModule
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
         KAFKA_SECURITY_USERNAME: kafka-admin
         KAFKA_SECURITY_PASSWORD: Metech123
-        KAFKA_SCHEMA_SERVER: 'http://omicx-schema-headless:8081'
+        KAFKA_SCHEMA_SERVER: "http://omicx-schema-headless:8081"
     volumeMounts: {}
     volumes: {}
     service:
@@ -1245,23 +1275,23 @@ deployments:
   - name: normalization-service
     image: normalization-service
     pullPolicy: Always
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/normalization-service/*'
-        mountPath: '/app/config/log.ini'
-        subPath: 'log.ini'
+      - name: "config"
+        folder: "resources/normalization-service/*"
+        mountPath: "/app/config/log.ini"
+        subPath: "log.ini"
     env: {}
     envs:
       secret: {}
       config:
         BASE_FOLDER: public/files_upload
-        ACCESS_LOG_PATH: '-'
-        ERROR_LOG_PATH: '-'
+        ACCESS_LOG_PATH: "-"
+        ERROR_LOG_PATH: "-"
         KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_GROUP_ID: NORMALIZATION_SERVICE
         KAFKA_SASL_MECHANISM: SCRAM-SHA-512
@@ -1288,11 +1318,11 @@ deployments:
   - name: email-notification
     image: email-notification
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     env: {}
     envs:
       secret: {}
@@ -1307,8 +1337,8 @@ deployments:
         DOMAIN_NAME: https://crm-dev-v1.metechvn.com
         SOCIAL_NOTIFICATION_URL: http://omicx-social-configurations-7980-service:7980/api/v1
         KAFKA_ENABLED: true
-        KAFKA_BOOTSTRAP_SERVERS: 'kafka-0:9092,kafka-1:9092,kafka-2:9092'
-        KAFKA_SCHEMA_REGISTRY_URL: 'http://omicx-schema-headless:8081'
+        KAFKA_BOOTSTRAP_SERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
+        KAFKA_SCHEMA_REGISTRY_URL: "http://omicx-schema-headless:8081"
         KAFKA_GROUP_ID: EMAIL-NOTIFICATION
         KAFKA_CONSUMER_AUTO_COMMIT: false
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
@@ -1328,16 +1358,16 @@ deployments:
   - name: authorization-service
     image: authorization-service
     pullPolicy: IfNotPresent
-    tag: 'latest'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
-    configmap: ''
+    configmap: ""
     configmapFromFile:
-      - name: 'config'
-        folder: 'resources/authorization-service/*'
-        mountPath: '/app/appsettings.json'
-        subPath: 'appsettings.json'
+      - name: "config"
+        folder: "resources/authorization-service/*"
+        mountPath: "/app/appsettings.json"
+        subPath: "appsettings.json"
     volumeMounts:
       - mountPath: /app/log4net.config
         name: config
@@ -1352,7 +1382,7 @@ deployments:
       port: 21021
     resources:
       limits:
-        cpu: '1'
+        cpu: "1"
         memory: 1Gi
       requests:
         cpu: 125m
@@ -1365,7 +1395,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ''
+  name: ""
 
 podAnnotations: {}
 
@@ -1388,7 +1418,7 @@ service:
 
 ingress:
   enabled: false
-  className: ''
+  className: ""
   annotations:
     {}
     # kubernetes.io/ingress.class: nginx
@@ -1420,7 +1450,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: 'a8042c5c'
+  targetCPUUtilizationPercentag: "a8042c5c"
   # targetMemoryUtilizationPercentag: 'a8042c5c'
 
 nodeSelector: {}
