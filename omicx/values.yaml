@@ -646,7 +646,7 @@ deployments:
   - name: web-be
     customImage: docker-registry.metechvn.com/dev/omicx-v2/backend
     pullPolicy: IfNotPresent
-    tag: '2b718002'
+    tag: '4f772224'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
