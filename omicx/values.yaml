@@ -644,7 +644,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: web-be
-    image: backend
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/backend
     pullPolicy: IfNotPresent
     tag: "latest"
     replicaCount: 1
