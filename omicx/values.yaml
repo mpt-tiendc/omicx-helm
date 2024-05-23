@@ -561,7 +561,7 @@ deployments:
         memory: 512Mi
 
   - name: socket-server
-    image: socket_server
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/socket_server
     pullPolicy: IfNotPresent
     tag: '29cc7e51'
     replicaCount: 1
@@ -594,6 +594,7 @@ deployments:
         CS_PING_INTERVAL: "15000"
         CS_PING_TIMEOUT: "60000"
         LOG_LEVEL: "info"
+        ABLY_TOKEN: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
     volumeMounts: {}
     volumes: {}
     service:
@@ -646,7 +647,7 @@ deployments:
   - name: web-be
     customImage: docker-registry.metechvn.com/dev/omicx-v2/backend
     pullPolicy: IfNotPresent
-    tag: 'b2701430'
+    tag: "b2701430"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -717,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: '18a2e8ae'
+    tag: "18a2e8ae"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -858,7 +859,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: '84aadcfe'
+    tag: "84aadcfe"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -940,9 +941,9 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-asm-chat
-    image: acd-asm-chat
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-asm-chat
     pullPolicy: Always
-    tag: '8e9a1b25'
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -992,7 +993,7 @@ deployments:
   - name: call-connector
     customImage: docker-registry.metechvn.com/dev/omicx/call-connector
     pullPolicy: Always
-    tag: 'c244a804'
+    tag: "c244a804"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
