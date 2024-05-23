@@ -563,7 +563,7 @@ deployments:
   - name: socket-server
     image: socket_server
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: '29cc7e51'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
