@@ -942,7 +942,7 @@ deployments:
   - name: acd-asm-chat
     image: acd-asm-chat
     pullPolicy: Always
-    tag: "latest"
+    tag: '8e9a1b25'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
