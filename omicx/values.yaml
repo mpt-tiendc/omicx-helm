@@ -912,7 +912,7 @@ deployments:
   - name: acd-agent-assignment
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-agent-assignment
     pullPolicy: Always
-    tag: '8f1859c5'
+    tag: 'c90c03a3'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
