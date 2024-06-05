@@ -943,7 +943,7 @@ deployments:
   - name: acd-asm-chat
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-asm-chat
     pullPolicy: Always
-    tag: '7dbb2d8c'
+    tag: '00d34387'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
