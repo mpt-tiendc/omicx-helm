@@ -563,7 +563,7 @@ deployments:
   - name: socket-server
     customImage: docker-registry.metechvn.com/dev/omicx-v2/socket_server
     pullPolicy: IfNotPresent
-    tag: '29cc7e51'
+    tag: "29cc7e51"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: 'b4a6e6b4'
+    tag: "b4a6e6b4"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -859,7 +859,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: 'dfcb69cb'
+    tag: "dfcb69cb"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -912,7 +912,7 @@ deployments:
   - name: acd-agent-assignment
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-agent-assignment
     pullPolicy: Always
-    tag: 'c90c03a3'
+    tag: "c90c03a3"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -943,7 +943,7 @@ deployments:
   - name: acd-asm-chat
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-asm-chat
     pullPolicy: Always
-    tag: '68a4849e'
+    tag: "68a4849e"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1388,7 +1388,31 @@ deployments:
       requests:
         cpu: 125m
         memory: 128Mi
-
+  - name: contact-service
+    customImage: docker-registry.metechvn.com/develop/contact-service
+    pullPolicy: Always
+    tag: "latest"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: {}
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1000Mi
+      requests:
+        cpu: 128m
+        memory: 64Mi
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
