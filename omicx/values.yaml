@@ -1413,6 +1413,35 @@ deployments:
       requests:
         cpu: 128m
         memory: 64Mi
+  - name: acd-workflow
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
+    pullPolicy: Always
+    tag: "latest"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config: 
+        PORT: 8080
+        CADENCE_SERVER: 103.141.141.60:7833
+        CADENCE_DOMAIN: dev-v2
+        CALL_MANAGER_URL: http://103.141.141.53:6969
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1000Mi
+      requests:
+        cpu: 128m
+        memory: 64Mi
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
