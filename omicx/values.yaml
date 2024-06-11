@@ -16,7 +16,7 @@ global:
     secret: {}
     config: {}
   hostAliases:
-    - ip: "168.2.79.9"
+    - ip: "168.12.69.42"
       hostnames:
         - "kafka-0"
         - "kafka-1"
@@ -24,13 +24,13 @@ global:
     - ip: "10.10.10.26"
       hostnames:
         - "crm-db"
-    - ip: "168.2.69.21"
+    - ip: "168.2.46.71"
       hostnames:
         - "report-db"
-    - ip: "168.2.69.21"
+    - ip: "168.2.46.71"
       hostnames:
         - "chat-db"
-    - ip: "168.0.212.98"
+    - ip: "168.8.40.255"
       hostnames:
         - "redis-host"
     - ip: "169.1.30.77"
