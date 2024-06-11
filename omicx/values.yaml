@@ -1425,11 +1425,12 @@ deployments:
     env: {}
     envs:
       secret: {}
-      config: 
+      config:
         PORT: 8080
         CADENCE_SERVER: 103.141.141.60:7833
         CADENCE_DOMAIN: dev-v2
         CALL_MANAGER_URL: http://103.141.141.53:6969
+        ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-dev.svc.cluster.local:6970
     volumeMounts: {}
     volumes: {}
     service:
