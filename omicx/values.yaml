@@ -1416,7 +1416,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: '2b24124a'
+    tag: '25253237'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1505,8 +1505,8 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: '2b24124a'
-  # targetMemoryUtilizationPercentag: '2b24124a'
+  targetCPUUtilizationPercentag: '25253237'
+  # targetMemoryUtilizationPercentag: '25253237'
 
 nodeSelector: {}
 
