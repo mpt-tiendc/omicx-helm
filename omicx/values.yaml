@@ -1416,7 +1416,7 @@ deployments:
   - name: ticket-service
     customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
     pullPolicy: Always
-    tag: "latest"
+    tag: '9230f37a'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
