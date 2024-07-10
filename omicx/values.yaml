@@ -16,7 +16,7 @@ global:
     secret: {}
     config: {}
   hostAliases:
-    - ip: "omicx-kafka-headless.omicx-v2-uat.svc.cluster.local"
+    - ip: "169.1.19.114"
       hostnames:
         - "kafka-0"
         - "kafka-1"
@@ -30,7 +30,7 @@ global:
     - ip: "168.2.46.71"
       hostnames:
         - "chat-db"
-    - ip: "omicx-redis-6379-service.omicx-v2-uat.svc.cluster.local"
+    - ip: "169.1.19.96"
       hostnames:
         - "redis-host"
     - ip: "169.1.30.77"
@@ -1416,7 +1416,7 @@ deployments:
   - name: ticket-service
     customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
     pullPolicy: Always
-    tag: '9230f37a'
+    tag: "9230f37a"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
