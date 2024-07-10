@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: "b4a6e6b4"
+    tag: "f0effd46"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -859,7 +859,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: "dfcb69cb"
+    tag: "9797f8bf"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -943,7 +943,7 @@ deployments:
   - name: acd-asm-chat
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-asm-chat
     pullPolicy: Always
-    tag: "68a4849e"
+    tag: "db5a4579"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1413,6 +1413,68 @@ deployments:
       requests:
         cpu: 128m
         memory: 64Mi
+  - name: ticket-service
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
+    pullPolicy: Always
+    tag: '9230f37a'
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        PORT: 8080
+        DB_TYPE: postgres
+        DB_HOST: omicx-postgresql-hl.omicx-v2-dev.svc.cluster.local
+        DB_PORT: 5432
+        DB_USERNAME: omicxadmin
+        DB_PASSWORD: Abc@123@345&*^
+        DB_NAME: ticket-service
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1000Mi
+      requests:
+        cpu: 128m
+        memory: 64Mi
+  - name: acd-workflow
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
+    pullPolicy: Always
+    tag: "d9775005"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        PORT: 8080
+        CADENCE_SERVER: 103.141.141.60:7833
+        CADENCE_DOMAIN: dev-v2
+        CALL_MANAGER_URL: http://103.141.141.53:6969
+        ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-dev.svc.cluster.local:6970
+    volumeMounts: {}
+    volumes: {}
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 1000Mi
+      requests:
+        cpu: 128m
+        memory: 64Mi
 serviceAccount:
   # Specifies whether a service account should be created
   create: false
@@ -1475,8 +1537,8 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: "a8042c5c"
-  # targetMemoryUtilizationPercentag: 'a8042c5c'
+  targetCPUUtilizationPercentag: "d9775005"
+  # targetMemoryUtilizationPercentag: 'd9775005'
 
 nodeSelector: {}
 
