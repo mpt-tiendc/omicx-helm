@@ -647,7 +647,7 @@ deployments:
   - name: web-be
     image: backend
     pullPolicy: IfNotPresent
-    tag: "b2701430"
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
