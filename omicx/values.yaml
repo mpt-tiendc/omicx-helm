@@ -647,7 +647,7 @@ deployments:
   - name: web-be
     image: backend
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: "cabea146"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
