@@ -30,7 +30,7 @@ global:
     - ip: "168.2.46.71"
       hostnames:
         - "chat-db"
-    - ip: "169.1.19.96"
+    - ip: "168.8.40.255"
       hostnames:
         - "redis-host"
     - ip: "169.1.30.77"
