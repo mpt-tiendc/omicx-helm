@@ -16,7 +16,7 @@ global:
     secret: {}
     config: {}
   hostAliases:
-    - ip: "168.12.69.42"
+    - ip: "omicx-kafka-headless.omicx-v2-uat.svc.cluster.local"
       hostnames:
         - "kafka-0"
         - "kafka-1"
@@ -30,7 +30,7 @@ global:
     - ip: "168.2.46.71"
       hostnames:
         - "chat-db"
-    - ip: "168.8.40.255"
+    - ip: "omicx-redis-6379-service.omicx-v2-uat.svc.cluster.local"
       hostnames:
         - "redis-host"
     - ip: "169.1.30.77"
@@ -92,7 +92,7 @@ deployments:
     envs:
       secret: {}
       config:
-        BACKEND_URL: http://omicx-authorization-service-21021-service.omicx-v2-dev.svc.cluster.local:21021/api/Authorization/CheckPermission
+        BACKEND_URL: http://omicx-authorization-service-21021-service.omicx-v2-uat.svc.cluster.local:21021/api/Authorization/CheckPermission
     volumeMounts:
       - mountPath: /home/data
         name: homedata
@@ -188,10 +188,10 @@ deployments:
         PBX_HEARTBEAT_INTERVAL: "60000"
         CPS: 20
         SLEEP_MS: 1000
-        PBX_INSTANCES: 10.10.10.31,8021,ClueCon,103.141.141.55:5080|external
+        PBX_INSTANCES: 10.10.10.35,8021,ClueCon,103.141.141.59:5080|external
         PORT: "5580"
         RECORD_URL_PREFIX: https://crm-dev-v1.metechvn.com/file
-        URL_CALL_CENTER: http://10.10.10.31:5590
+        URL_CALL_CENTER: http://10.10.10.35:5590
         IP_GATEWAY: "8ab65d17-7d16-4971-91b5-60035cd13340"
         ENCRYPT_SENSITIVE_KEY: "01234567896868686868012345678968"
         ASM_VOICE_GRPC_URL: omicx-asm-3003-service:3476
@@ -1428,7 +1428,7 @@ deployments:
       config:
         PORT: 8080
         DB_TYPE: postgres
-        DB_HOST: omicx-postgresql-hl.omicx-v2-dev.svc.cluster.local
+        DB_HOST: omicx-postgresql-hl.omicx-v2-uat.svc.cluster.local
         DB_PORT: 5432
         DB_USERNAME: omicxadmin
         DB_PASSWORD: Abc@123@345&*^
@@ -1462,7 +1462,7 @@ deployments:
         CADENCE_SERVER: 103.141.141.60:7833
         CADENCE_DOMAIN: dev-v2
         CALL_MANAGER_URL: http://103.141.141.53:6969
-        ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-dev.svc.cluster.local:6970
+        ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-uat.svc.cluster.local:6970
     volumeMounts: {}
     volumes: {}
     service:
