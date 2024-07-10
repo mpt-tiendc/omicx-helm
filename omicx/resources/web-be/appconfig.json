@@ -1,87 +1,83 @@
 {
-    "project": 0,
-    "remoteServiceBaseUrl": "https://crm-dev-v1.metechvn.com",
-    "tenantSubscriptionUrl": "https://crm-dev-v1.metechvn.com/tenant-registration",
-    "appBaseUrl": "https://crm-dev-v1.metechvn.com",
-    "agentStatusManagementUrl": "https://crm-dev-v1.metechvn.com/asm",
-    "campaignPlanningUrl": "https://crm-dev-v1.metechvn.com/campaign-planning",
-    "channelManagerServiceBaseUrl": "https://crm-dev-v1.metechvn.com/channel-manager",
-    "channelGWBaseUrl": "https://crm-dev-v1.metechvn.com/channelgw",
-    "reportBaseUrl": "https://crm-dev-v1.metechvn.com/reporting",
-    "audioUrl": "https://crm-dev-v1.metechvn.com/static/recording/",
-    "audioSurveyUrl": "https://crm-dev-v1.metechvn.com/static/survey/",
-    "freeSwitchBackend": "https://crm-dev-v1.metechvn.com/fsapi",
-    "avatarUrl": "https://crm-dev-v1.metechvn.com/static/image/",
-    "fileUrl": "https://crm-dev-v1.metechvn.com/static",
-    "fileExportUrl": "https://crm-dev-v1.metechvn.com/static/jobfile/",
-  	"fileImportUrl": "https://crm-dev-v1.metechvn.com/static/files_upload/",
-    "socialUrl": "https://crm-dev-v1.metechvn.com/static/socials/",
-    "mediaUrl": "https://crm-dev-v1.metechvn.com",
-    "telesaleTransferNumber": "179004",
-    "cskhTransferNumber": "179005",
-    "outboundSurveyNumber": "40600",
-    "inboundSurveyNumber": "40601",
-    "intervalCheckError": 20000,
-    "fsSocketServer": "wss://proxy.metechvn.com:7443",
-    "fsSipDomain": "voice.metechvn.com",
-    "fsSipPort": 5090,
-    "pbxIntegrationUrl": "https://crm-dev-v1.metechvn.com/fsapi",
-    "productCatalogUrl": "https://crm-dev-v1.metechvn.com/catalog",
-    "appIdFB": "811725996448810",
-    "acdBackendServiceBaseUrl": "http://omicx-acd-backend-3006-service:3006",
-    "zaloConnectorlUrl": "http://omicx-acd-zalo-connector-6969-service:6969",
-    "acdAsmUrl": "https://crm-dev-v1.metechvn.com/acd-asm",
-    "phoneNumberRegex": "^(0|1|84|\\+84)(\\d{9,12})$",
-    "PrefixAudioUrl": "https://crm-dev-v1.metechvn.com/file/",
-  	"chatStatisticsUrl": "https://crm-dev-v1.metechvn.com",
-    "tenancy": {
-      "multitenancy": true,
-      "defaultTenancy": ""
+  "project": 0,
+  "remoteServiceBaseUrl": "https://crm-uat-v1.metechvn.com",
+  "tenantSubscriptionUrl": "https://crm-uat-v1.metechvn.com/tenant-registration",
+  "appBaseUrl": "https://crm-uat-v1.metechvn.com",
+  "agentStatusManagementUrl": "https://crm-uat-v1.metechvn.com/asm",
+  "campaignPlanningUrl": "https://crm-uat-v1.metechvn.com/campaign-planning",
+  "channelManagerServiceBaseUrl": "https://crm-uat-v1.metechvn.com/channel-manager",
+  "channelGWBaseUrl": "https://crm-uat-v1.metechvn.com/channelgw",
+  "reportBaseUrl": "https://crm-uat-v1.metechvn.com/reporting",
+  "audioUrl": "https://crm-uat-v1.metechvn.com/static/recording/",
+  "audioSurveyUrl": "https://crm-uat-v1.metechvn.com/static/survey/",
+  "freeSwitchBackend": "https://crm-uat-v1.metechvn.com/fsapi",
+  "avatarUrl": "https://crm-uat-v1.metechvn.com/static/image/",
+  "fileUrl": "https://crm-uat-v1.metechvn.com/static",
+  "fileExportUrl": "https://crm-uat-v1.metechvn.com/static/jobfile/",
+  "fileImportUrl": "https://crm-uat-v1.metechvn.com/static/files_upload/",
+  "socialUrl": "https://crm-uat-v1.metechvn.com/static/socials/",
+  "mediaUrl": "https://crm-uat-v1.metechvn.com",
+  "telesaleTransferNumber": "179004",
+  "cskhTransferNumber": "179005",
+  "outboundSurveyNumber": "40600",
+  "inboundSurveyNumber": "40601",
+  "intervalCheckError": 20000,
+  "fsSocketServer": "wss://proxy.metechvn.com:7443",
+  "fsSipDomain": "voice.metechvn.com",
+  "fsSipPort": 5090,
+  "pbxIntegrationUrl": "https://crm-uat-v1.metechvn.com/fsapi",
+  "productCatalogUrl": "https://crm-uat-v1.metechvn.com/catalog",
+  "appIdFB": "811725996448810",
+  "acdBackendServiceBaseUrl": "http://omicx-acd-backend-3006-service:3006",
+  "zaloConnectorlUrl": "http://omicx-acd-zalo-connector-6969-service:6969",
+  "acdAsmUrl": "https://crm-uat-v1.metechvn.com/acd-asm",
+  "phoneNumberRegex": "^(0|1|84|\\+84)(\\d{9,12})$",
+  "PrefixAudioUrl": "https://crm-uat-v1.metechvn.com/file/",
+  "chatStatisticsUrl": "https://crm-uat-v1.metechvn.com",
+  "tenancy": {
+    "multitenancy": true,
+    "defaultTenancy": ""
+  },
+  "reCaptcha": {
+    "reCaptcha": false,
+    "key": "NkxjYS1UQWFBQUFBQURXbWtzTlBsdzhDX1cxR1BMOVZoNDRRZlF0bw==",
+    "hl": "vi"
+  },
+  "sipJsLogLevel": "error",
+  "socketIoConfig": {
+    "url": "https://crm-uat-v1.metechvn.com",
+    "options": {
+      "path": "/socket-server",
+      "autoConnect": false,
+      "reconnection": false,
+      "transports": ["websocket"]
+    }
+  },
+  "socketIoCallConfig": {
+    "url": "https://crm-uat-v1.metechvn.com",
+    "options": {
+      "path": "/call-server",
+      "autoConnect": false,
+      "reconnection": false,
+      "transports": ["websocket"]
+    }
+  },
+  "localeMappings": [
+    {
+      "from": "pt-BR",
+      "to": "pt"
     },
-    "reCaptcha": {
-      "reCaptcha": false,
-      "key": "NkxjYS1UQWFBQUFBQURXbWtzTlBsdzhDX1cxR1BMOVZoNDRRZlF0bw==",
-      "hl": "vi"
+    {
+      "from": "zh-CN",
+      "to": "zh"
     },
-    "sipJsLogLevel": "error",
-    "socketIoConfig": {
-      "url": "https://crm-dev-v1.metechvn.com",
-      "options": {
-        "path": "/socket-server",
-        "autoConnect": false,
-        "reconnection": false,
-        "transports": [
-          "websocket"
-        ]
-      }
-    },
-    "socketIoCallConfig": {
-      "url": "https://crm-dev-v1.metechvn.com",
-      "options": {
-        "path": "/call-server",
-        "autoConnect": false,
-        "reconnection": false,
-        "transports": [
-          "websocket"
-        ]
-      }
-    },
-    "localeMappings": [
-      {
-        "from": "pt-BR",
-        "to": "pt"
-      },
-      {
-        "from": "zh-CN",
-        "to": "zh"
-      },
-      {
-        "from": "he-IL",
-        "to": "he"
-      }
-    ],
-    "campaignReport": "https://statistic.omicx.vn/public/dashboards/0CuMvcjtjQ5k5dy2LMEg4RAulY3ktCBTR4MjzEiQ?org_slug=default&p_campaign=2&p_daterange=d_this_year",
-    "ticketReport": "https://statistic.omicx.vn/public/dashboards/feBK7AlDEj324Bx3yHhTmqTVaumXa6wvY4AidR6w?org_slug=default&p_daterange=d_this_year&refresh=600",
-    "callReport": "https://statistic.omicx.vn/public/dashboards/Sbmwcc4O8Cf3JAhkVNdBvFdyVoJ0O2HsmyH9TdHb?org_slug=default%2Fpublic%2Fdashboards%2FSbmwcc4O8Cf3JAhkVNdBvFdyVoJ0O2HsmyH9TdHb%3Forg_slug%3Ddefault&p_daterange=d_this_year&refresh=600",
-    "chatReport": ""
-  }
+    {
+      "from": "he-IL",
+      "to": "he"
+    }
+  ],
+  "campaignReport": "https://statistic.omicx.vn/public/dashboards/0CuMvcjtjQ5k5dy2LMEg4RAulY3ktCBTR4MjzEiQ?org_slug=default&p_campaign=2&p_daterange=d_this_year",
+  "ticketReport": "https://statistic.omicx.vn/public/dashboards/feBK7AlDEj324Bx3yHhTmqTVaumXa6wvY4AidR6w?org_slug=default&p_daterange=d_this_year&refresh=600",
+  "callReport": "https://statistic.omicx.vn/public/dashboards/Sbmwcc4O8Cf3JAhkVNdBvFdyVoJ0O2HsmyH9TdHb?org_slug=default%2Fpublic%2Fdashboards%2FSbmwcc4O8Cf3JAhkVNdBvFdyVoJ0O2HsmyH9TdHb%3Forg_slug%3Ddefault&p_daterange=d_this_year&refresh=600",
+  "chatReport": ""
+}
