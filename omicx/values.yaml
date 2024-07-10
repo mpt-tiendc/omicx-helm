@@ -727,7 +727,14 @@ deployments:
     env: {}
     envs:
       secret: {}
-      config: {}
+      config:
+        BASE_URL: https://crm-dev-v2.metechvn.com
+        SSO_URL: https://crm-dev-v1.metechvn.com
+        SIP_URL: wss://sip-device.metechvn.com:7443
+        ABLY_KEY: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
+        SIP_PORT: 7443
+        NEXTAUTH_URL: https://crm-dev-v2.metechvn.com/backend/auth
+        NEXTAUTH_SECRET: lI+mR8GzTUr249OZjNL0MXuC8ayCYeByI05oP3H91MU=
     volumes: {}
     service:
       type: ClusterIP
