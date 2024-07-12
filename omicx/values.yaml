@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: 'a5ba6d3d'
+    tag: "a5ba6d3d"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -821,7 +821,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-zalo-connector
-    image: acd-zalo-connector
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-zalo-connector
     pullPolicy: Always
     tag: "latest"
     replicaCount: 1
@@ -1027,7 +1027,7 @@ deployments:
         memory: 64Mi
 
   - name: acd-facebook-connector
-    image: acd-facebook-connector
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-facebook-connector
     pullPolicy: Always
     tag: "latest"
     replicaCount: 1
@@ -1423,7 +1423,7 @@ deployments:
   - name: ticket-service
     customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
     pullPolicy: Always
-    tag: '4fb5c6cc'
+    tag: "4fb5c6cc"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
