@@ -823,7 +823,7 @@ deployments:
   - name: acd-zalo-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-zalo-connector
     pullPolicy: Always
-    tag: '2fe9a0e1'
+    tag: '3e42cd30'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
