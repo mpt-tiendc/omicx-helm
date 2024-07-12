@@ -1073,7 +1073,7 @@ deployments:
   - name: social-configurations
     customImage: docker-registry.metechvn.com/dev/omicx-v2/social-configurations
     pullPolicy: Always
-    tag: "latest"
+    tag: '4c29bcd3'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
