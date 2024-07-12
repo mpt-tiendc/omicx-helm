@@ -1071,7 +1071,7 @@ deployments:
         cpu: 500m
         memory: 64Mi
   - name: social-configurations
-    image: social-configurations
+    customImage: docker-registry.metechvn.com/dev/omicx-v2/social-configurations
     pullPolicy: Always
     tag: "latest"
     replicaCount: 1
