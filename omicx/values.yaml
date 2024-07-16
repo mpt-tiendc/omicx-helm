@@ -919,7 +919,7 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-agent-assignment
-    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-agent-assignment
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-agent-assignment
     pullPolicy: Always
     tag: "c90c03a3"
     replicaCount: 1
@@ -950,9 +950,9 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-asm-chat
-    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-asm-chat
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-asm-chat
     pullPolicy: Always
-    tag: "db5a4579"
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1073,7 +1073,7 @@ deployments:
         cpu: 500m
         memory: 64Mi
   - name: social-configurations
-    image: social-configurations
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/social-configurations
     pullPolicy: Always
     tag: "latest"
     replicaCount: 1
