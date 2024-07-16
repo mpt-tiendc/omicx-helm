@@ -716,9 +716,9 @@ deployments:
         cpu: 125m
         memory: 16Mi
   - name: frontend-v2
-    customImage: docker-registry.metechvn.com/uat/omicx/frontend-v2
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/frontend-v2
     pullPolicy: Always
-    tag: "2fe0fa94"
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -864,9 +864,9 @@ deployments:
         cpu: 125m
         memory: 64Mi
   - name: acd-backend
-    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: "9797f8bf"
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
