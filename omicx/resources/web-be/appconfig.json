@@ -27,7 +27,7 @@
   "fsSipPort": 5090,
   "pbxIntegrationUrl": "https://crm-uat-v1.metechvn.com/fsapi",
   "productCatalogUrl": "https://crm-uat-v1.metechvn.com/catalog",
-  "appIdFB": "811725996448810",
+  "appIdFB": "1628829451299524",
   "acdBackendServiceBaseUrl": "http://omicx-acd-backend-3006-service:3006",
   "zaloConnectorlUrl": "http://omicx-acd-zalo-connector-6969-service:6969",
   "acdAsmUrl": "https://crm-uat-v1.metechvn.com/acd-asm",
