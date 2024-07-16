@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/uat/omicx/frontend-v2
     pullPolicy: Always
-    tag: '2fe0fa94'
+    tag: "2fe0fa94"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -903,6 +903,7 @@ deployments:
         TELEGRAM_CONNECTOR_URL: omicx-acd-telegram-connector-7992-service:7993
         WS_CONNECTOR_URL: omicx-acd-whatsapp-connector-7994-service:7995
         ABLY_TOKEN: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
+        ACD_WORKFLOW_URL: http://omicx-acd-workflow-8080-service.omicx-v2-uat.svc.cluster.local:8080
     volumeMounts: {}
     volumes: {}
     service:
@@ -965,7 +966,7 @@ deployments:
         DB_PORT: 1433
         DB_USERNAME: dbadmin
         DB_PASSWORD: "123456aA@"
-        DB_DATABASE: ACD_ASM
+        DB_DATABASE: ACD_ASM_UAT
         GRPC_URL_CONNECTION: "0.0.0.0:6973"
         GRPC_URL_CONNECTION_SOCIAL_CONFIGURATION: "omicx-social-configurations-7980-service:7989"
         KAFKA_AUTHENTICATION_TIMEOUT: "10000"
@@ -1261,7 +1262,7 @@ deployments:
         ELASTICSEARCH_PASSWORD: "Metech123"
         ELASTICSEARCH_DEFAULT_INDEX: "default_index"
         KAFKA_BOOTSTRAP_SERVER: "kafka-0:9092"
-        INSTANCE_ID: "-elastic-synchronizer-dev"
+        INSTANCE_ID: "-elastic-synchronizer-uat"
         KAFKA_SECURITY_LOGIN_MODULE: org.apache.kafka.common.security.scram.ScramLoginModule
         KAFKA_SECURITY_PROTOCOL: SASL_PLAINTEXT
         KAFKA_SECURITY_MECHANISM: SCRAM-SHA-512
@@ -1396,7 +1397,7 @@ deployments:
         cpu: 125m
         memory: 128Mi
   - name: contact-service
-    customImage: docker-registry.metechvn.com/develop/contact-service
+    customImage: docker-registry.metechvn.com/uat/contact-service
     pullPolicy: Always
     tag: "latest"
     replicaCount: 1
@@ -1421,7 +1422,7 @@ deployments:
         cpu: 128m
         memory: 64Mi
   - name: ticket-service
-    customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/ticket-service
     pullPolicy: Always
     tag: "9230f37a"
     replicaCount: 1
@@ -1453,9 +1454,9 @@ deployments:
         cpu: 128m
         memory: 64Mi
   - name: acd-workflow
-    customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: "d9775005"
+    tag: "b6f3c278"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
