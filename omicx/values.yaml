@@ -1441,6 +1441,10 @@ deployments:
         DB_USERNAME: omicxadmin
         DB_PASSWORD: Abc@123@345&*^
         DB_NAME: ticket-service
+        KAFKA_BROKERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_MECHANISM: sha512
     volumeMounts: {}
     volumes: {}
     service:
