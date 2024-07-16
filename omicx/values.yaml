@@ -594,7 +594,7 @@ deployments:
         CS_PING_INTERVAL: "15000"
         CS_PING_TIMEOUT: "60000"
         LOG_LEVEL: "info"
-        ABLY_TOKEN: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
+        ABLY_TOKEN: buksSw.ftlsiw:6imSNvdBIMOqY6svw9OQ5fjSuVJAx-36OjPEYXRHFZ8
     volumeMounts: {}
     volumes: {}
     service:
@@ -731,7 +731,7 @@ deployments:
         BASE_URL: https://crm-uat-v2.metechvn.com
         SSO_URL: https://crm-uat-v1.metechvn.com
         SIP_URL: wss://sip-device.metechvn.com:7443
-        ABLY_KEY: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
+        ABLY_KEY: buksSw.ftlsiw:6imSNvdBIMOqY6svw9OQ5fjSuVJAx-36OjPEYXRHFZ8
         SIP_PORT: 7443
         NEXTAUTH_URL: https://crm-uat-v2.metechvn.com/backend/auth
         NEXTAUTH_SECRET: lI+mR8GzTUr249OZjNL0MXuC8ayCYeByI05oP3H91MU=
@@ -902,7 +902,7 @@ deployments:
         VIBER_CONNECTOR_URL: omicx-acd-viber-connector-7996-service:7997
         TELEGRAM_CONNECTOR_URL: omicx-acd-telegram-connector-7992-service:7993
         WS_CONNECTOR_URL: omicx-acd-whatsapp-connector-7994-service:7995
-        ABLY_TOKEN: Q2uJIQ.Zm08kA:nAxJfuZNMUW-4ZEFBAfMG1PlkBeStC8_fiFD88kGkLM
+        ABLY_TOKEN: buksSw.ftlsiw:6imSNvdBIMOqY6svw9OQ5fjSuVJAx-36OjPEYXRHFZ8
         ACD_WORKFLOW_URL: http://omicx-acd-workflow-8080-service.omicx-v2-uat.svc.cluster.local:8080
     volumeMounts: {}
     volumes: {}
