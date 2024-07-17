@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: '78ea08e7'
+    tag: "78ea08e7"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -823,7 +823,7 @@ deployments:
   - name: acd-zalo-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-zalo-connector
     pullPolicy: Always
-    tag: 'a244de5e'
+    tag: "a244de5e"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -866,7 +866,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: 'acde2103'
+    tag: "acde2103"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1029,7 +1029,7 @@ deployments:
   - name: acd-facebook-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-facebook-connector
     pullPolicy: Always
-    tag: '8a60bfc8'
+    tag: "8a60bfc8"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1073,7 +1073,7 @@ deployments:
   - name: social-configurations
     customImage: docker-registry.metechvn.com/dev/omicx-v2/social-configurations
     pullPolicy: Always
-    tag: '4c29bcd3'
+    tag: "4c29bcd3"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1423,7 +1423,7 @@ deployments:
   - name: ticket-service
     customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
     pullPolicy: Always
-    tag: 'b6107637'
+    tag: "b6107637"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1439,7 +1439,7 @@ deployments:
         DB_PORT: 5432
         DB_USERNAME: omicxadmin
         DB_PASSWORD: Abc@123@345&*^
-        DB_NAME: ticket-service
+        DB_NAME: dev-contact-service
         KAFKA_BROKERS: kafka-0:9092
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
@@ -1459,7 +1459,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: 'd85389ae'
+    tag: "d85389ae"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1548,7 +1548,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: 'd85389ae'
+  targetCPUUtilizationPercentag: "d85389ae"
   # targetMemoryUtilizationPercentag: 'd85389ae'
 
 nodeSelector: {}
