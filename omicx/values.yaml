@@ -1029,7 +1029,7 @@ deployments:
   - name: acd-facebook-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-facebook-connector
     pullPolicy: Always
-    tag: "8a60bfc8"
+    tag: '279bddbc'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
