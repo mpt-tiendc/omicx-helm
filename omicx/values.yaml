@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/uat/omicx-v2/frontend-v2
     pullPolicy: Always
-    tag: 'a80fa4a5'
+    tag: "a80fa4a5"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -867,7 +867,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: '7095875c'
+    tag: "7095875c"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1461,7 +1461,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: '4b272c9e'
+    tag: "4b272c9e"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1474,7 +1474,7 @@ deployments:
         PORT: 8080
         CADENCE_SERVER: 103.141.141.60:7833
         CADENCE_DOMAIN: uat-v2
-        CALL_MANAGER_URL: http://103.141.141.53:6969
+        CALL_MANAGER_URL: http://103.141.141.57:6969
         ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-uat.svc.cluster.local:6970
         SOCIAL_CONFIG_URL: http://omicx-social-configurations-7980-service.omicx-v2-uat.svc.cluster.local:7980
         ACD_BACKEND_URL: http://omicx-acd-backend-3006-service.omicx-v2-uat.svc.cluster.local:3006
@@ -1554,7 +1554,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: '4b272c9e'
+  targetCPUUtilizationPercentag: "4b272c9e"
   # targetMemoryUtilizationPercentag: '4b272c9e'
 
 nodeSelector: {}
