@@ -1476,6 +1476,8 @@ deployments:
         CADENCE_DOMAIN: uat-v2
         CALL_MANAGER_URL: http://103.141.141.53:6969
         ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-uat.svc.cluster.local:6970
+        SOCIAL_CONFIG_URL: http://omicx-social-configurations-7980-service.omicx-v2-uat.svc.cluster.local:7980
+        ACD_BACKEND_URL: http://omicx-acd-backend-3006-service.omicx-v2-uat.svc.cluster.local:3006
     volumeMounts: {}
     volumes: {}
     service:
