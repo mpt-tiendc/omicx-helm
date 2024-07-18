@@ -1478,6 +1478,8 @@ deployments:
         ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-uat.svc.cluster.local:6970
         SOCIAL_CONFIG_URL: http://omicx-social-configurations-7980-service.omicx-v2-uat.svc.cluster.local:7980
         ACD_BACKEND_URL: http://omicx-acd-backend-3006-service.omicx-v2-uat.svc.cluster.local:3006
+        CALLBACK_URL: https://crm-uat-v2.metechvn.com/workflow
+        INBOUND_GATEWAY: 103.141.141.59:5080
     volumeMounts: {}
     volumes: {}
     service:
