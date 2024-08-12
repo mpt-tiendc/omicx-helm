@@ -1398,7 +1398,7 @@ deployments:
   - name: contact-service
     customImage: docker-registry.metechvn.com/develop/contact-service
     pullPolicy: Always
-    tag: "latest"
+    tag: "694969d3"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
