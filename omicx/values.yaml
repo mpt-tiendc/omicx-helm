@@ -866,7 +866,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: 'b9e4390b'
+    tag: 'c471fb94'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
