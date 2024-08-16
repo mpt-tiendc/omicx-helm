@@ -1396,9 +1396,9 @@ deployments:
         cpu: 125m
         memory: 128Mi
   - name: contact-service
-    customImage: docker-registry.metechvn.com/develop/contact-service
+    customImage: docker-registry.metechvn.com/dev/omicx/contact-service
     pullPolicy: Always
-    tag: "694969d3"
+    tag: "latest"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
