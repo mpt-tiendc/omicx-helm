@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: 'fac02a88'
+    tag: "fac02a88"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -823,7 +823,7 @@ deployments:
   - name: acd-zalo-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-zalo-connector
     pullPolicy: Always
-    tag: 'be507837'
+    tag: "be507837"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -866,7 +866,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: 'bd940b45'
+    tag: "bd940b45"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1026,10 +1026,39 @@ deployments:
         cpu: 500m
         memory: 64Mi
 
+  - name: ai-connector
+    customImage: docker-registry.metechvn.com/dev/omicx/ai-connector
+    pullPolicy: Always
+    tag: "latest"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        KAFKA_BROKERS: kafka-0:9092
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_MECHANISM: sha512
+        KAFKA_CALL_CONNECTOR_TOPIC: AI.Webhook.Received
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 64Mi
+
   - name: acd-facebook-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-facebook-connector
     pullPolicy: Always
-    tag: 'b8dab66e'
+    tag: "b8dab66e"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1398,7 +1427,7 @@ deployments:
   - name: contact-service
     customImage: docker-registry.metechvn.com/dev/omicx/contact-service
     pullPolicy: Always
-    tag: '4228ae2e'
+    tag: "4228ae2e"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1423,7 +1452,7 @@ deployments:
   - name: ticket-service
     customImage: docker-registry.metechvn.com/dev/omicx-v2/ticket-service
     pullPolicy: Always
-    tag: '6d1213bb'
+    tag: "6d1213bb"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1459,7 +1488,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: '3488be56'
+    tag: "3488be56"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1548,7 +1577,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: '3488be56'
+  targetCPUUtilizationPercentag: "3488be56"
   # targetMemoryUtilizationPercentag: '3488be56'
 
 nodeSelector: {}
