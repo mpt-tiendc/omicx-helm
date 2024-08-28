@@ -1029,7 +1029,7 @@ deployments:
   - name: ai-connector
     customImage: docker-registry.metechvn.com/dev/omicx/ai-connector
     pullPolicy: Always
-    tag: "latest"
+    tag: '4261dffb'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
