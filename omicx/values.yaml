@@ -1043,7 +1043,7 @@ deployments:
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
         KAFKA_SASL_MECHANISM: sha512
-        KAFKA_CALL_CONNECTOR_TOPIC: AI.Webhook.Received
+        KAFKA_AI_CONNECTOR_TOPIC: AI.Webhook.Received
     service:
       type: ClusterIP
       port: 8080
