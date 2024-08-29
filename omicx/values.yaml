@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: "fac02a88"
+    tag: '4d856b03'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
