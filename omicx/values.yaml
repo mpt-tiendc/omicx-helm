@@ -563,7 +563,7 @@ deployments:
   - name: socket-server
     customImage: docker-registry.metechvn.com/dev/omicx-v2/socket_server
     pullPolicy: IfNotPresent
-    tag: "29cc7e51"
+    tag: '93bb42e7'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
