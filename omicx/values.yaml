@@ -1427,7 +1427,7 @@ deployments:
   - name: contact-service
     customImage: docker-registry.metechvn.com/dev/omicx/contact-service
     pullPolicy: Always
-    tag: 'a89612be'
+    tag: '1085c015'
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
