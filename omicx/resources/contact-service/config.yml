@@ -13,6 +13,6 @@ kafka:
   brokers:
     - omicx-kafka-0.omicx-kafka-headless.omicx-v2-dev.svc.cluster.local:9092
   security_protocol: SASL_PLAINTEXT
-  sasl_mechanisms: CRAM-SHA-512
+  sasl_mechanisms: PLAIN
   sasl_username: kafka-admin
   sasl_password: Metech123
