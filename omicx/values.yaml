@@ -563,7 +563,7 @@ deployments:
   - name: socket-server
     customImage: docker-registry.metechvn.com/dev/omicx-v2/socket_server
     pullPolicy: IfNotPresent
-    tag: '93bb42e7'
+    tag: "93bb42e7"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: '071de4c9'
+    tag: "071de4c9"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -866,7 +866,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: '417a996f'
+    tag: "417a996f"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1029,7 +1029,7 @@ deployments:
   - name: ai-connector
     customImage: docker-registry.metechvn.com/dev/omicx/ai-connector
     pullPolicy: Always
-    tag: '4261dffb'
+    tag: "4261dffb"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1427,12 +1427,16 @@ deployments:
   - name: contact-service
     customImage: docker-registry.metechvn.com/dev/omicx/contact-service
     pullPolicy: Always
-    tag: '1085c015'
+    tag: "1085c015"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
     configmap: ""
-    configmapFromFile: {}
+    configmapFromFile:
+      - name: "config"
+        folder: "resources/contact-service/*"
+        mountPath: "/root/config.yml"
+        subPath: "config.yml"
     env: {}
     envs:
       secret: {}
@@ -1488,7 +1492,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: 'f90ae935'
+    tag: "f90ae935"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1577,7 +1581,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: 'f90ae935'
+  targetCPUUtilizationPercentag: "f90ae935"
   # targetMemoryUtilizationPercentag: 'f90ae935'
 
 nodeSelector: {}
