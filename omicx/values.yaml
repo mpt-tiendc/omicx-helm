@@ -864,6 +864,34 @@ deployments:
       requests:
         cpu: 125m
         memory: 64Mi
+  - name: ai-connector
+    customImage: docker-registry.metechvn.com/dev/omicx/ai-connector
+    pullPolicy: Always
+    tag: "4261dffb"
+    replicaCount: 1
+    routePath: /
+    initialDelaySeconds: 5
+    configmap: ""
+    configmapFromFile: {}
+    env: {}
+    envs:
+      secret: {}
+      config:
+        KAFKA_BROKERS: kafka-0:9092
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_MECHANISM: sha512
+        KAFKA_AI_CONNECTOR_TOPIC: AI.Webhook.Received
+    service:
+      type: ClusterIP
+      port: 8080
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 64Mi
   - name: acd-backend
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-backend
     pullPolicy: Always
@@ -908,6 +936,8 @@ deployments:
         ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-uat.svc.cluster.local:6970
         CALL_MANAGER_URL: http://103.141.141.57:6969
         CONTACT_SERVICE_URL: http://omicx-contact-service-8080-service.omicx-v2-uat.svc.cluster.local:8080
+        DEFAULT_TENANT: 2
+        ORGANIZATION: omicx-uat
     volumeMounts: {}
     volumes: {}
     service:
@@ -1408,7 +1438,11 @@ deployments:
     routePath: /
     initialDelaySeconds: 5
     configmap: ""
-    configmapFromFile: {}
+    configmapFromFile:
+      - name: "config"
+        folder: "resources/contact-service/*"
+        mountPath: "/root/config.yml"
+        subPath: "config.yml"
     env: {}
     envs:
       secret: {}
@@ -1445,7 +1479,7 @@ deployments:
         DB_USERNAME: omicxadmin
         DB_PASSWORD: Abc@123@345&*^
         DB_NAME: ticket-service
-        KAFKA_BROKERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
+        KAFKA_BROKERS: kafka-0:9092
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
         KAFKA_SASL_MECHANISM: sha512
@@ -1483,6 +1517,10 @@ deployments:
         ACD_BACKEND_URL: http://omicx-acd-backend-3006-service.omicx-v2-uat.svc.cluster.local:3006
         CALLBACK_URL: https://crm-uat-v2.metechvn.com/workflow
         INBOUND_GATEWAY: 103.141.141.59:5080
+        KAFKA_BROKERS: kafka-0:9092
+        KAFKA_SASL_USERNAME: kafka-admin
+        KAFKA_SASL_PASSWORD: Metech123
+        KAFKA_SASL_MECHANISM: sha512
     volumeMounts: {}
     volumes: {}
     service:

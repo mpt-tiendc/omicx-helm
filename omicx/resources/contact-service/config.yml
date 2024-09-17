@@ -1,0 +1,18 @@
+app:
+  #  env: local
+  port: 8080
+  allowed_hosts: "*"
+
+database:
+  host: 103.141.141.60
+  port: 15432
+  user: postgres
+  password: Default#Postgres@6699
+  name: dev-contact-service
+kafka:
+  brokers:
+    - kafka-0:9092
+  security_protocol: SASL_PLAINTEXT
+  sasl_mechanisms: PLAIN
+  sasl_username: kafka-admin
+  sasl_password: Metech123
