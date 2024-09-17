@@ -16,7 +16,7 @@ global:
     secret: {}
     config: {}
   hostAliases:
-    - ip: "169.1.19.114"
+    - ip: "168.12.69.42"
       hostnames:
         - "kafka-0"
         - "kafka-1"
@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/uat/omicx-v2/frontend-v2
     pullPolicy: Always
-    tag: 'db264a64'
+    tag: "db264a64"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -824,7 +824,7 @@ deployments:
     image: acd-zalo-connector
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-zalo-connector
     pullPolicy: Always
-    tag: '1f93ac99'
+    tag: "1f93ac99"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -867,7 +867,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: 'a32b4755'
+    tag: "a32b4755"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1034,7 +1034,7 @@ deployments:
   - name: acd-facebook-connector
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-facebook-connector
     pullPolicy: Always
-    tag: 'e2ecf2cc'
+    tag: "e2ecf2cc"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1428,7 +1428,7 @@ deployments:
   - name: ticket-service
     customImage: docker-registry.metechvn.com/uat/omicx-v2/ticket-service
     pullPolicy: Always
-    tag: 'c0165979'
+    tag: "c0165979"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1464,7 +1464,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: '756c47fc'
+    tag: "756c47fc"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1557,7 +1557,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: '756c47fc'
+  targetCPUUtilizationPercentag: "756c47fc"
   # targetMemoryUtilizationPercentag: '756c47fc'
 
 nodeSelector: {}
