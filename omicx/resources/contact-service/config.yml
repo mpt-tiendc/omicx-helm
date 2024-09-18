@@ -8,7 +8,7 @@ database:
   port: 15432
   user: postgres
   password: Default#Postgres@6699
-  name: dev-contact-service
+  name: contact-service
 kafka:
   brokers:
     - kafka-0:9092
