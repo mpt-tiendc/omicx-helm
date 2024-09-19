@@ -561,7 +561,7 @@ deployments:
         memory: 512Mi
 
   - name: socket-server
-    customImage: docker-registry.metechvn.com/dev/omicx-v2/socket_server
+    customImage: docker-registry.metechvn.com/uat/omicx-v2/socket_server
     pullPolicy: IfNotPresent
     tag: "29cc7e51"
     replicaCount: 1
