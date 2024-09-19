@@ -36,7 +36,7 @@ global:
     - ip: "169.1.30.77"
       hostnames:
         - "elasticsearch-host"
-    - ip: "10.10.10.36"
+    - ip: "168.10.46.169"
       hostnames:
         - "postgresql-host"
 
@@ -563,7 +563,7 @@ deployments:
   - name: socket-server
     customImage: docker-registry.metechvn.com/dev/omicx-v2/socket_server
     pullPolicy: IfNotPresent
-    tag: 'd472f7f5'
+    tag: "d472f7f5"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: '55ced4df'
+    tag: "55ced4df"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -866,7 +866,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: '75da7698'
+    tag: "75da7698"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1058,7 +1058,7 @@ deployments:
   - name: acd-facebook-connector
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-facebook-connector
     pullPolicy: Always
-    tag: '8cb47e1c'
+    tag: "8cb47e1c"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1492,7 +1492,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: '65d4aade'
+    tag: "65d4aade"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1511,6 +1511,12 @@ deployments:
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
         KAFKA_SASL_MECHANISM: sha512
+        DB_TYPE: postgres
+        DB_HOST: postgresql-host
+        DB_PORT: 5432
+        DB_USERNAME: omicxadmin
+        DB_PASSWORD: Abc@123@345&*^
+        DB_NAME: acd-workflow
     volumeMounts: {}
     volumes: {}
     service:
@@ -1585,7 +1591,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: '65d4aade'
+  targetCPUUtilizationPercentag: "65d4aade"
   # targetMemoryUtilizationPercentag: '65d4aade'
 
 nodeSelector: {}
