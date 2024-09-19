@@ -895,7 +895,7 @@ deployments:
   - name: acd-backend
     customImage: docker-registry.metechvn.com/uat/omicx-v2/acd-backend
     pullPolicy: Always
-    tag: '75da7698'
+    tag: "75da7698"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -936,6 +936,7 @@ deployments:
         ASM_URL: http://omicx-acd-asm-chat-6970-service.omicx-v2-uat.svc.cluster.local:6970
         CALL_MANAGER_URL: http://103.141.141.57:6969
         CONTACT_SERVICE_URL: http://omicx-contact-service-8080-service.omicx-v2-uat.svc.cluster.local:8080
+        CRM_BACKEND_URL: http://omicx-web-be-9701-service.omicx-v2-uat.svc.cluster.local:9701
         DEFAULT_TENANT: 2
         ORGANIZATION: omicx-uat
     volumeMounts: {}
