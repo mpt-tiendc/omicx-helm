@@ -36,7 +36,7 @@ global:
     - ip: "169.1.30.77"
       hostnames:
         - "elasticsearch-host"
-    - ip: "10.10.10.37"
+    - ip: "168.12.215.183"
       hostnames:
         - "postgresql-host"
 
@@ -563,7 +563,7 @@ deployments:
   - name: socket-server
     customImage: docker-registry.metechvn.com/uat/omicx-v2/socket_server
     pullPolicy: IfNotPresent
-    tag: 'd472f7f5'
+    tag: "d472f7f5"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/uat/omicx-v2/frontend-v2
     pullPolicy: Always
-    tag: 'd38085e1'
+    tag: "d38085e1"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -1317,7 +1317,7 @@ deployments:
         cpu: 128m
         memory: 64Mi
   - name: normalization-service
-    image: normalization-service
+    customImage: docker-registry.metechvn.com/release/omicx-1.0.5.11/normalization-service
     pullPolicy: Always
     tag: "latest"
     replicaCount: 1
