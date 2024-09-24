@@ -718,7 +718,7 @@ deployments:
   - name: frontend-v2
     customImage: docker-registry.metechvn.com/dev/omicx/frontend-v2
     pullPolicy: IfNotPresent
-    tag: 'aff9c69f'
+    tag: "aff9c69f"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 30
@@ -1310,9 +1310,9 @@ deployments:
         cpu: 128m
         memory: 64Mi
   - name: normalization-service
-    image: normalization-service
+    customImage: docker-registry.metechvn.com/uat/omicx/normalization-service
     pullPolicy: Always
-    tag: "latest"
+    tag: "2a6132bb"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1331,7 +1331,7 @@ deployments:
         ERROR_LOG_PATH: "-"
         KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092,kafka-1:9092,kafka-2:9092
         KAFKA_GROUP_ID: NORMALIZATION_SERVICE
-        KAFKA_SASL_MECHANISM: SCRAM-SHA-512
+        KAFKA_SASL_MECHANISM: PLAIN
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
         PORT: 8088
@@ -1492,7 +1492,7 @@ deployments:
   - name: acd-workflow
     customImage: docker-registry.metechvn.com/dev/omicx-v2/acd-workflow
     pullPolicy: Always
-    tag: 'cbb4a6ff'
+    tag: "cbb4a6ff"
     replicaCount: 1
     routePath: /
     initialDelaySeconds: 5
@@ -1591,7 +1591,7 @@ autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
-  targetCPUUtilizationPercentag: 'cbb4a6ff'
+  targetCPUUtilizationPercentag: "cbb4a6ff"
   # targetMemoryUtilizationPercentag: 'cbb4a6ff'
 
 nodeSelector: {}
