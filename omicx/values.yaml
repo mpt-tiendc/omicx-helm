@@ -1522,6 +1522,12 @@ deployments:
         KAFKA_SASL_USERNAME: kafka-admin
         KAFKA_SASL_PASSWORD: Metech123
         KAFKA_SASL_MECHANISM: sha512
+        DB_TYPE: postgres
+        DB_HOST: postgresql-host
+        DB_PORT: 5432
+        DB_USERNAME: omicxadmin
+        DB_PASSWORD: Abc@123@345&*^
+        DB_NAME: acd-workflow
     volumeMounts: {}
     volumes: {}
     service:
